@@ -7,7 +7,7 @@ const page = () => {
     const sortedProjects = [...projects].sort((a, b) => b.year - a.year);
 
     return (
-        <section className="w-full h-full bg-navy" id="project-archive">
+        <section className="absolute top-0 z-[-2] h-screen w-screen mx-auto overflow-x-hidden bg-navy line-height-2 p-0 m-0 text-light-slate antialiased selection:bg-lightest-navy selection:text-green" id="project-archive">
             <div className="p-10 sm:p-20">
                 {/* Section Heading */}
                 <div className="flex flex-col mb-10">
