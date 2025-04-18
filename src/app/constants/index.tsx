@@ -101,6 +101,15 @@ export const projects = [
         year: 2024,
         madeAt: "Personal Project",
     },
+    {
+        title: "Maya Assistant",
+        description: "Maya Assistance is a virtual assistant inspired by Jarvis from Iron Man. The backend is built with Python, and the frontend is created using HTML, CSS, and JavaScript.",
+        githubLink: "https://github.com/ZaddyAI/Maya-Assistance",
+        externalLink: "",
+        tools: ["Python", "HTML", "CSS", "JavaScript"],
+        year: 2024,
+        madeAt: "Personal Project",
+    },
 ];
 
 export const contactDescription = " Although I’m not currently looking for any new opportunities, my inbox is always open. Whether you have a question or just want to say hi, I’ll try my best to get back to you!"
