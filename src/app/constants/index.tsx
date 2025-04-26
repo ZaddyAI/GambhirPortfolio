@@ -8,7 +8,6 @@ export const socialLinks = {
 }
 export const skills = [
     "Flutter",
-    "Google Console",
     "Firebase",
     "React JS",
     "Node.js",
