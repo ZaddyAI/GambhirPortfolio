@@ -10,7 +10,6 @@ export const skills = [
     "Flutter",
     "Firebase",
     "React JS",
-    "Node.js",
     "Figma",
     "Android",
 ];
