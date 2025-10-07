@@ -14,7 +14,7 @@ function About() {
                     <div className="w-[150px] sm:w-[200px] lg:w-[350px] h-px bg-lightest-navy"></div>
                 </div>
                 <div className="flex flex-col lg:flex-row gap-8 sm:gap-10">
-                    <div className="text w-full lg:w-3/5 xl:w-2/5 line-height-2 text-slate text-sm sm:text-lg">
+                    <div className="font-calibre w-full lg:w-3/5 xl:w-2/5 line-height-2 text-slate text-sm sm:text-lg">
                         <div className="space-y-4">
                             <p dangerouslySetInnerHTML={{ __html: aboutParagraph1 }}></p>
                             <p dangerouslySetInnerHTML={{ __html: aboutParagraph2 }}></p>

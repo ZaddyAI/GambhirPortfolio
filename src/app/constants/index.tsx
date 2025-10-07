@@ -26,7 +26,7 @@ export const aboutParagraph3 =
     "During the <strong>COVID-19 pandemic</strong> in 2020, I took a deep dive into web development and digital marketing, intrigued by how user behavior and data-driven design shape online interactions. This period refined my understanding of digital ecosystems and product thinking.";
 
 export const aboutParagraph4 =
-    "Today, I’m advancing my skills in <strong>Flutter</strong> and <strong>React.js</strong> while working at <a href='https://www.linkedin.com/company/kutumba-tech-pvt-ltd/' class='text-greenn'>Kutumba Tech</a>. Starting as a Flutter Developer Intern and now serving as a <strong>Junior Software Developer</strong>, I work on both mobile and web platforms—bridging creativity with functionality to build seamless, scalable applications.";
+    "Today, I’m advancing my skills in <strong>Flutter</strong> and <strong>React.js</strong> while working at <a href='https://www.linkedin.com/company/kutumba-tech-pvt-ltd/' class='link-tab'>Kutumba Tech</a>. Starting as a Flutter Developer Intern and now serving as a <strong>Junior Software Developer</strong>, I work on both mobile and web platforms—bridging creativity with functionality to build seamless, scalable applications.";
 
 export const experiencesData = [
     {
