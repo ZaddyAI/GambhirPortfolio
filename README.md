@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hey there, I’m **Gambhir Poudel** 👋
 
-## Getting Started
+I build things for the web & mobile.
 
-First, run the development server:
+I’m a dedicated BCA student with a deep passion for computer science and technology. With a strong academic record and sharpened problem-solving skills, I thrive in collaborative environments and continuously seek to expand my tech horizons. My ambition is to specialize in software engineering or data science, and I’m committed to shaping the future of tech.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 About Me
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+My tech journey started back in grade 8, when I got my first computer and began exploring HTML, Excel, and Word.
+Web development caught my interest in 2015, when I tried customizing websites using HTML & CSS.
+Amidst the 2020 pandemic, I dove deeper into web dev and digital marketing—curious about how people behave online and how marketing influences decisions.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Now, I’m actively expanding my skills and interning as a **Flutter Developer** at **Kutumba Tech**, where I work across both frontend and backend domains.
+I love building elegant, performant applications, and I'm passionate about creating digital experiences that matter.
 
-## Learn More
+### 🔧 Technologies I Work With
 
-To learn more about Next.js, take a look at the following resources:
+- **Frontend / Mobile**: Flutter, React.js
+- **Backend / Database**: Node.js, Firebase
+- **Design & Tools**: Figma, Android
+- **Other skills**: UI/UX, clean architecture, state management (Bloc), responsive design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🏢 Experience
 
-## Deploy on Vercel
+### Flutter Developer @ Kutumba Tech
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+_Dec 2023 – Present_
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Building mobile applications using Flutter
+- Integrating backend services
+- Implementing clean architecture and state management (Bloc)
+- Taking part in full-stack development cycles
+
+---
+
+## 💡 Projects & Highlights
+
+| Project                             | Description & Technologies                                                           |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| **Streamly**                        | An ad-free movie & TV streaming platform built with Next.js, Tailwind, and TMDB API. |
+| **MatriNepal**                      | A matrimonial site developed as a college project, using PHP, HTML, CSS.             |
+| **LMS (Library Management System)** | A system to manage library resources, built with PHP + MySQL.                        |
+| **NepFlix**                         | A Flutter application for discovering movies & TV shows, leveraging TMDB API.        |
+| **Flutter Task Tracker**            | A tasks app in Flutter — create, edit, delete tasks with persistence.                |
+| **MediServ (Hackathon project)**    | Figma prototype UI/UX tool to locate required medicines and nearby health centers.   |
+
+You can explore more of my work in my [GitHub repositories](https://github.com/gambhirpoudel).
+
+---
+
+## 📬 Let’s Connect
+
+While I’m not actively looking for new roles currently, my inbox is always open. Whether you have a question, idea, or just want to say hi—drop me a message. I’ll do my best to respond.
+
+**LinkedIn** | **Twitter** | **Instagram** | **GitHub**
+
+---
+
+_Build by Gambhir Poudel_
+Inspired by my personal site: [gambhirpoudel.com.np](https://www.gambhirpoudel.com.np/)

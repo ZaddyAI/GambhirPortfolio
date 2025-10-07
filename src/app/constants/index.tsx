@@ -1,7 +1,7 @@
 export const email = "gambhir.poudel@gmail.com"
 export const name = "Gambhir Poudel"
 export const socialLinks = {
-    'instagram': 'https://www.instagram.com/supremeleader.io/',
+    // 'instagram': 'https://www.instagram.com/supremeleader.io/',
     'github': 'https://github.com/ZaddyAI',
     'linkedin': 'https://www.linkedin.com/in/gambhirpoudel/',
     'twitter': "https://x.com/gambhirpoudel"
@@ -13,34 +13,43 @@ export const skills = [
     "Figma",
     "Android",
 ];
-export const heroDescription = "  Dedicated BCA student passionate about computer science andtechnology, excelling in academics with strong problem-solving skills. Effective team player with up-to-date tech knowledge, aspiring to specialize in software engineering or data science. Committed to excellence and eager to contribute to the tech industry's future."
-export const aboutParagraph1 = "Hello! My name is Gambhir,currently pursuing BCA. My journey in the digital realm began when I received my first computer in grade 8. It marked the inception of my exploration into various tools, including HTML, Excel, and MS-Word."
-export const aboutParagraph2 = "I enjoy creating things that live on the internet. My interest in web development started back in 2015 when I decided to try editing custom websites using HTML & CSS! ,"
-export const aboutParagraph3 = "   In 2020, amidst the COVID-19 pandemic, I delved into web development and digital marketing tools, driven by my curiosity about human behavior online and the influence of digital marketing on consumer decisions."
-export const aboutParagraph4 = "Currently, I am expanding my expertise through advanced training and certification while interning at <a href='https://www.linkedin.com/company/kutumba-tech-pvt-ltd/' class='text-greenn'>Kutumba Tech</a> for Flutter application development. This dual focus empowers me to excel in both frontend and backend development, driving my career forward in digital innovation."
+export const heroDescription =
+    "Innovative and passionate BCA student with a deep love for computer science and technology. Skilled in problem-solving and dedicated to continuous learning, I thrive on transforming ideas into functional, elegant solutions. With growing expertise in Flutter and React, I aspire to excel in software engineering and contribute to impactful digital experiences.";
+
+export const aboutParagraph1 =
+    "Hello! I'm <strong>Gambhir Poudel</strong>, a BCA student with an unwavering curiosity for technology and digital innovation. My journey began back in grade 8 when I first got my hands on a computer—it sparked my fascination with how software works and inspired me to start exploring tools like HTML, Excel, and MS Word.";
+
+export const aboutParagraph2 =
+    "Over the years, I’ve developed a strong passion for crafting beautiful, responsive applications that live on the internet. My first step into web development came in <strong>2015</strong>, when I started customizing websites using HTML and CSS — and I’ve been hooked ever since.";
+
+export const aboutParagraph3 =
+    "During the <strong>COVID-19 pandemic</strong> in 2020, I took a deep dive into web development and digital marketing, intrigued by how user behavior and data-driven design shape online interactions. This period refined my understanding of digital ecosystems and product thinking.";
+
+export const aboutParagraph4 =
+    "Today, I’m advancing my skills in <strong>Flutter</strong> and <strong>React.js</strong> while working at <a href='https://www.linkedin.com/company/kutumba-tech-pvt-ltd/' class='text-greenn'>Kutumba Tech</a>. Starting as a Flutter Developer Intern and now serving as a <strong>Junior Software Developer</strong>, I work on both mobile and web platforms—bridging creativity with functionality to build seamless, scalable applications.";
+
 export const experiencesData = [
     {
         company: "Kutumba Tech",
-        title: "Flutter Developer",
+        title: "Junior Software Developer",
         location: "Hetauda",
         range: "Dec 2023 - Present",
         description: [
-            "<p>As a Flutter developer at Kutumba Tech, my role involved creating mobile applications, focusing on UI design, backend interaction, and Bloc pattern implementation for state management.</p>",
-            "<p>This experience allowed me to delve into clean architecture principles, honing my skills in mobile app development best practices.</p>",
-            "<p>Throughout my tenure, I contributed to various projects, gaining hands-on experience in the intricacies of mobile application development.</p>",
-            "<p>Overall, my time at Kutumba Tech is invaluable, providing me with opportunities to grow and refine my expertise in Flutter development.</p>"
+            "<p>I began my journey at <strong>Kutumba Tech</strong> as a <strong>Flutter Developer Intern</strong>, where I focused on building mobile applications with a strong emphasis on UI design, backend integration, and state management using the Bloc pattern.</p>",
+            "<p>From <strong>December 2024</strong>, I advanced into a full-time role as a <strong>Junior Software Developer</strong>, expanding my expertise to include both <strong>Flutter</strong> and <strong>React.js</strong> frameworks.</p>",
+            "<p>In this position, I contribute to designing and developing scalable mobile and web applications, ensuring clean architecture, responsive design, and optimal performance across devices.</p>",
+            "<p>My time at Kutumba Tech has been transformative — strengthening my technical skills, problem-solving abilities, and collaborative development mindset.</p>"
         ],
-
         url: "https://www.linkedin.com/company/kutumba-tech-pvt-ltd/",
     },
-
 ];
+
 export const projects = [
     {
         title: "Streamly",
         description: "Streamly, your premier ad-free streaming platform for movies and TV series! Streamly offers a seamless and enjoyable viewing experience, allowing you to watch your favorite content without interruptions.",
         githubLink: "https://github.com/ZaddyAI/Streamly",
-        externalLink: "https://streamly-zeta.vercel.app/",
+        externalLink: "https://movies.gambhirpoudel.com.np/",
         tools: ["Next.Js", "TMDB", "Tailwind"],
         year: 2024,
         madeAt: "Personal Project",
