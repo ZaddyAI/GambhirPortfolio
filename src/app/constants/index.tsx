@@ -55,6 +55,15 @@ export const projects = [
         madeAt: "Personal Project",
     },
     {
+        title: "Nepali Calendar Kit",
+        description: "A lightweight React library for Nepali calendar operations, including AD ↔ BS conversion, date formatting, and a Nepali Date Picker component.",
+        githubLink: "https://github.com/ZaddyAI/nepali-calendar-kit",
+        externalLink: "https://nepalicalendarkit.gambhirpoudel.com.np/",
+        tools: ["Ts", "Node.js"],
+        year: 2026,
+        madeAt: "Personal Project",
+    },
+    {
         title: "MatriNepal",
         description: "MatriNepal stands as a comprehensive matrimony site meticulously crafted by Gambhir Poudel, serving as an exemplary project for a college endeavor. This platform boasts a myriad of features designed to streamline the matrimonial process, offering users a seamless and efficient experience.",
         githubLink: "https://github.com/ZaddyAI/MatriNepal",
