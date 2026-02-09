@@ -33,7 +33,7 @@ export const experiencesData = [
         company: "Kutumba Tech",
         title: "Junior Software Developer",
         location: "Hetauda",
-        range: "Dec 2023 - Present",
+        range: "Dec 2023 - Feb 2026",
         description: [
             "<p>I began my journey at <strong>Kutumba Tech</strong> as a <strong>Flutter Developer Intern</strong>, where I focused on building mobile applications with a strong emphasis on UI design, backend integration, and state management using the Bloc pattern.</p>",
             "<p>From <strong>December 2024</strong>, I advanced into a full-time role as a <strong>Junior Software Developer</strong>, expanding my expertise to include both <strong>Flutter</strong> and <strong>React.js</strong> frameworks.</p>",
