@@ -13,7 +13,7 @@ import {
   projects, 
   socialLinks,
   email,
-  heroDescription
+  aboutParagraphs
 } from "@/lib/constants"
 import { IconGitHub, IconLinkedin, IconTwitter, IconExternal, IconFolder, IconInstagram, IconUpwork } from "@/components/icons"
 
@@ -94,7 +94,7 @@ export default function Home() {
                       className="mt-4 max-w-xs leading-relaxed text-[#94a3b8]"
                     >
                      
-                     {heroDescription}
+                     {aboutDescription}
                     </motion.p>
 
                     {/* Navigation */}
@@ -267,7 +267,7 @@ function AboutSection() {
   return (
     <section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
       <SectionHeader number="01" title="About" />
-      
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -275,27 +275,16 @@ function AboutSection() {
         transition={{ duration: 0.5 }}
       >
         <div className="space-y-4 text-[#94a3b8] leading-relaxed">
-          <p>
-            {aboutDescription}
-          </p>
-          <p>
-            My main focus these days is building products and leading projects at{" "}
-            <a href="https://www.linkedin.com/company/kutumba-tech-pvt-ltd/" target="_blank" rel="noopener noreferrer" className="inline-link">
-              Kutumba Tech
-            </a>
-            . In my free time, I&apos;ve also released an{" "}
-            <a href="https://nepalicalendarkit.gambhirpoudel.com.np/" target="_blank" rel="noopener noreferrer" className="inline-link">
-              open-source Nepali Calendar Kit
-            </a>
-            , exploring new technologies and contributing to the developer community.
-          </p>
-          <p>
-            When I&apos;m not at the computer, I&apos;m usually learning new frameworks, reading tech blogs, or exploring the latest in mobile and web development.
-          </p>
+          {aboutParagraphs.map((para, index) => (
+            <p key={index}>{para}</p>
+          ))}
+          <p>{aboutParagraph2}</p>
         </div>
 
         <div className="mt-8">
-          <p className="text-sm text-[#94a3b8] mb-4">Here are a few technologies I&apos;ve been working with recently:</p>
+          <p className="text-sm text-[#94a3b8] mb-4">
+            Here are a few technologies I&apos;ve been working with recently:
+          </p>
           <ul className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm font-mono text-[#94a3b8]">
             {skills.map((skill, index) => (
               <motion.li
@@ -307,7 +296,7 @@ function AboutSection() {
                 whileHover={{ x: 4, color: "#e2e8f0" }}
                 className="flex items-center gap-2 cursor-default"
               >
-                <motion.span 
+                <motion.span
                   className="text-[#5eead4]"
                   whileHover={{ scale: 1.2 }}
                 >
@@ -320,7 +309,7 @@ function AboutSection() {
         </div>
       </motion.div>
     </section>
-  )
+  );
 }
 
 function ExperienceSection() {
@@ -430,10 +419,7 @@ function ProjectsSection() {
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
           >
-            <motion.a
-              href={project.externalLink || project.githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
+            <motion.div
               className="experience-card group block"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
@@ -478,27 +464,31 @@ function ProjectsSection() {
                       </motion.li>
                     ))}
                   </motion.ul>
-                  <div className="mt-3 flex items-center gap-3">
+                  <div className="mt-3 flex items-center gap-2">
                     {project.githubLink && (
-                      <motion.span 
-                        className="text-[#64748b] hover:text-[#5eead4] transition-colors"
-                        whileHover={{ scale: 1.1 }}
+                      <a 
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors !z-[50]"
                       >
                         <IconGitHub className="w-5 h-5" />
-                      </motion.span>
+                      </a>
                     )}
                     {project.externalLink && (
-                      <motion.span 
-                        className="text-[#64748b] hover:text-[#5eead4] transition-colors"
-                        whileHover={{ scale: 1.1 }}
+                      <a 
+                        href={project.externalLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors !z-[50]"
                       >
                         <IconExternal className="w-5 h-5" />
-                      </motion.span>
+                      </a>
                     )}
                   </div>
                 </div>
               </div>
-            </motion.a>
+            </motion.div>
           </motion.div>
         ))}
       </div>

@@ -37,11 +37,8 @@ export default function ProjectArchive() {
 
           <div className="space-y-4">
             {sortedProjects.map((project, index) => (
-              <motion.a
+              <motion.div
                 key={index}
-                href={project.externalLink || project.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
@@ -73,23 +70,33 @@ export default function ProjectArchive() {
                         </motion.li>
                       ))}
                     </motion.ul>
-                    <div className="mt-3 flex items-center gap-3">
+                    <div className="mt-3 flex items-center gap-2 relative z-10">
                       {project.githubLink && (
-                        <span className="text-[#64748b] hover:text-[#5eead4] transition-colors">
+                        <a 
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
+                        >
                           <IconGitHub className="w-5 h-5" />
-                        </span>
+                        </a>
                       )}
                       {project.externalLink && (
-                        <span className="text-[#64748b] hover:text-[#5eead4] transition-colors">
+                        <a 
+                          href={project.externalLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
+                        >
                           <IconExternal className="w-5 h-5" />
-                        </span>
+                        </a>
                       )}
                     </div>
-                  </div>
-                </div>
-              </motion.a>
-            ))}
-          </div>
+</div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
           <motion.footer
             initial={{ opacity: 0 }}

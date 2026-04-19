@@ -2,11 +2,12 @@ export const email = "gambhir.poudel@gmail.com";
 export const name = "Gambhir Poudel";
 
 export const socialLinks = {
-  instagram :"https://www.instagram.com/matkarladle69",
+  instagram: "https://www.instagram.com/matkarladle69",
   github: "https://github.com/ZaddyAI",
   linkedin: "https://www.linkedin.com/in/gambhirpoudel/",
   twitter: "https://x.com/gambhirpoudel",
-  upwork: "https://www.upwork.com/freelancers/~0179c4b07fcedadd61?mp_source=share",
+  upwork:
+    "https://www.upwork.com/freelancers/~0179c4b07fcedadd61?mp_source=share",
 };
 
 export const skills = [
@@ -15,40 +16,57 @@ export const skills = [
   "TypeScript",
   "Next.js",
   "Firebase",
+  "Firestore",
+  "BLoC",
+  "Redux",
   "Tailwind CSS",
+  "FCM",
 ];
 
-export const heroDescription =
-  "I help businesses build reliable mobile and web products — from idea to production. I specialize in Flutter, React/Next.js, and scalable backend systems using Node.js and Supabase.";
 
 export const aboutDescription =
-  "I'm a software developer passionate about crafting accessible, high-performance applications that blend thoughtful design with robust engineering.";
+  "who enjoys turning complex problems into simple, elegant products — with a focus on performance, clean architecture, and great user experience.";
 
 export const aboutParagraphs = [
-  "Hello! I'm Gambhir Poudel, a BCA graduate with a strong passion for building digital products and solving real-world problems through code.",
-  "I started my journey in tech back in grade 8, exploring basic tools and gradually moving into web development with HTML and CSS.",
-  "During the COVID-19 pandemic, I deepened my knowledge in web development and digital systems, gaining a strong understanding of user behavior and product thinking.",
-  "Currently, I work as a Software Developer at Kutumba Tech, building scalable mobile and web applications using Flutter and React.",
+  "Hey, I'm Gambhir Poudel — a Flutter and React.js developer based in Nepal, with 2+ years of professional experience shipping production apps at a software company.",
+  "I started my tech journey in grade 8, tinkering with basic tools and gradually falling in love with building things. By the time of the COVID-19 pandemic, I had moved deep into web development and product thinking — learning how real users interact with software.",
+  "Since then I've built and shipped a logistics and delivery app, integrated the eSewa payment gateway, implemented FCM push notifications, and launched Sajilo Khata — a personal finance tracker for Nepali users that automatically reads bank SMS to log transactions.",
+  "I also contribute to the Nepali developer ecosystem through open-source tools like Nepali Calendar Kit, an npm package averaging 4–6 downloads per week.",
 ];
 
 export const aboutParagraph2 =
-  "My current focus is building production-ready applications and improving system architecture. I also contribute to open-source projects like the Nepali Calendar Kit.";
+  "Right now I'm focused on building production-ready mobile apps, improving my architecture skills, and publishing tools that make life easier for developers and everyday users in Nepal.";
 
 export const experiencesData = [
   {
     company: "Kutumba Tech",
-    title: "Software Developer (Flutter & React.js)",
-    location: "Nepal",
-    range: "Dec 2023 - Feb 2026",
+    title: "Software Developer — Flutter & React.js",
+    location: "Kathmandu, Nepal",
+    range: "Oct 2024 – Feb 2026",
     description: [
-      "Develop and maintain mobile apps using Flutter with clean architecture and BLoC state management.",
-      "Build scalable web apps using React.js and Next.js.",
-      "Integrate REST APIs and Firebase-based authentication systems.",
-      "Collaborate with cross-functional teams to deliver production-ready features.",
-      "Optimize performance and ensure responsive UI/UX.",
+      "Owned end-to-end Flutter and React.js feature development across multiple production apps with modular, scalable architecture.",
+      "Built a full logistics and delivery app in Flutter — covering order tracking, route management, and real-time status updates.",
+      "Integrated eSewa payment gateway into a Flutter app, handling SDK setup, transaction verification, and error flows.",
+      "Integrated REST APIs and built secure auth flows using Firebase Authentication and Firestore.",
+      "Used BLoC for Flutter state management and Redux for React.js, keeping complex app state predictable and maintainable.",
+      "Improved app rendering performance and built pixel-perfect responsive UIs across Android and web.",
     ],
     url: "https://www.linkedin.com/company/kutumba-tech-pvt-ltd/",
-    tools: ["Flutter", "React.js", "Firebase", "Bloc", "REST APIs"],
+    tools: ["Flutter", "React.js", "Firebase", "Firestore", "BLoC", "Redux", "eSewa SDK", "REST APIs"],
+  },
+  {
+    company: "Kutumba Tech",
+    title: "Flutter Developer Intern",
+    location: "Kathmandu, Nepal",
+    range: "Dec 2023 – Sep 2024",
+    description: [
+      "Contributed Flutter modules to live production apps from the first month of the internship.",
+      "Implemented Firebase Authentication and RESTful API integrations for core app features.",
+      "Built reusable widget components and responsive layouts that reduced UI duplication across the codebase.",
+      "Participated in code reviews and agile sprints, consistently meeting sprint delivery targets.",
+    ],
+    url: "https://www.linkedin.com/company/kutumba-tech-pvt-ltd/",
+    tools: ["Flutter", "Dart", "Firebase", "REST APIs"],
   },
 ];
 
@@ -58,6 +76,8 @@ export const services = [
     points: [
       "Cross-platform apps with BLoC/Cubit",
       "Clean architecture & scalable codebase",
+      "Payment integration — eSewa & Khalti",
+      "FCM push notifications",
       "Play Store & App Store deployment",
     ],
   },
@@ -90,6 +110,7 @@ export const services = [
     points: [
       "WebSockets & live data sync",
       "Push notifications (FCM)",
+      "Real-time location & order tracking",
       "Realtime dashboards",
     ],
   },
@@ -116,6 +137,9 @@ export const techStack = [
   "Express",
   "Supabase",
   "Firebase",
+  "Firestore",
+  "FCM",
+  "eSewa SDK",
   "BLoC",
   "Cubit",
   "REST APIs",
@@ -124,7 +148,7 @@ export const techStack = [
 ];
 
 export const contactDescription =
-  "I'm open to freelance and collaboration opportunities. Feel free to reach out — I respond quickly and communicate clearly.";
+  "I'm open to freelance projects, full-time roles, and collaboration opportunities. Whether you have a product idea or need an extra hand on your team — feel free to reach out. I respond quickly and communicate clearly.";
 
 export const availability = {
   location: "नेपाल (Nepal)",
@@ -133,87 +157,57 @@ export const availability = {
 };
 
 export const projects = [
-    {
-        title: "Streamly",
-        description: "Streamly, your premier ad-free streaming platform for movies and TV series! Streamly offers a seamless and enjoyable viewing experience, allowing you to watch your favorite content without interruptions.",
-        githubLink: "https://github.com/ZaddyAI/Streamly",
-        externalLink: "https://movies.gambhirpoudel.com.np/",
-        tools: ["Next.Js", "TMDB", "Tailwind"],
-        year: 2024,
-        madeAt: "Personal Project",
-    },
-    {
-        title: "Nepali Calendar Kit",
-        description: "A lightweight React library for Nepali calendar operations, including AD ↔ BS conversion, date formatting, and a Nepali Date Picker component.",
-        githubLink: "https://github.com/ZaddyAI/nepali-calendar-kit",
-        externalLink: "https://nepalicalendarkit.gambhirpoudel.com.np/",
-        tools: ["Ts", "Node.js"],
-        year: 2026,
-        madeAt: "Personal Project",
-    },
-    {
-        title: "MatriNepal",
-        description: "MatriNepal stands as a comprehensive matrimony site meticulously crafted by Gambhir Poudel, serving as an exemplary project for a college endeavor. This platform boasts a myriad of features designed to streamline the matrimonial process, offering users a seamless and efficient experience.",
-        githubLink: "https://github.com/ZaddyAI/MatriNepal",
-        externalLink: "http://matrinepal.rf.gd/",
-        tools: ["PHP", "CSS", "HTML"],
-        year: 2023,
-        madeAt: "4th sem Project",
-    },
-    {
-        title: "LMS",
-        description: "The Library Management System, developed using PHP and MySQL Workbench, provides a comprehensive platform for managing library resources and enhancing user engagement",
-        githubLink: "https://github.com/ZaddyAI/LMS",
-        externalLink: "",
-        tools: ["PHP", "MySQL Workbench", "CSS"],
-        year: 2024,
-        madeAt: "6th sem Project",
-    },
-    {
-        title: "Nepflix",
-        description: "NepFlix is an engaging entertainment application built using Flutter, offering a delightful experience for users to explore and discover a diverse collection of movies and TV shows. With an intuitive interface and powerful features, NepFlix brings the world of entertainment right to your fingertips.",
-        githubLink: "https://github.com/ZaddyAI/Nepflix",
-        externalLink: "",
-        tools: ["Flutter", "Dart", "TMDB"],
-        year: 2024,
-        madeAt: "Personal Project",
-    },
-    {
-        title: "Flutter Tasks Tracker",
-        description: "Flutter Tasks Tracker is a simple Flutter app that allows users to manage tasks by adding, editing, and deleting them.",
-        githubLink: "https://github.com/ZaddyAI/Flutter-Tasks-Tracker",
-        externalLink: "",
-        tools: ["Flutter", "Dart", "Sql"],
-        year: 2024,
-        madeAt: "Personal Project",
-    },
-    {
-        title: "Mediserv",
-        description: "MediServ, a Hackathon project developed by a team of four, created a UI/UX prototype in Figma. The tool aids users in locating required medicines and provides information on their availability. If found, it directs users to nearby medical care centers. Simplifying healthcare access, it bridges the gap between medicine availability and user needs.",
-        githubLink: "",
-        externalLink: "https://www.figma.com/proto/CsNZevREH3vFfB3oPn8pS0/MEDISERV?node-id=777-543&starting-point-node-id=777%3A543",
-        tools: ["Figma", "Canva"],
-        year: 2023,
-        madeAt: "Hackathon Project",
-    },
-    {
-        title: "Personal Portfolio",
-        description: "Personal Portfolio Website",
-        githubLink: "",
-        externalLink: "https://www.gambhirpoudel.com.np/",
-        tools: ["Next.Js", "Tailwind"],
-        year: 2024,
-        madeAt: "Personal Project",
-    },
-    {
-        title: "Maya Assistant",
-        description: "Maya Assistance is a virtual assistant inspired by Jarvis from Iron Man. The backend is built with Python, and the frontend is created using HTML, CSS, and JavaScript.",
-        githubLink: "https://github.com/ZaddyAI/Maya-Assistance",
-        externalLink: "",
-        tools: ["Python", "HTML", "CSS", "JavaScript"],
-        year: 2024,
-        madeAt: "Personal Project",
-    },
+  {
+    title: "Sajilo Khata",
+    description:
+      "A personal finance tracker built for Nepali users. Sajilo Khata silently reads bank SMS from NIMB, NIC Asia, ADB, and Nabil Bank to automatically log income and expenses — no manual entry needed. Features spending charts, savings goals, FCM push notifications, offline-first architecture with Firestore cloud sync, and manual transaction management.",
+    githubLink: "https://github.com/ZaddyAI/Sajilo-Khata",
+    externalLink: "",
+    tools: ["Flutter", "Dart", "Firebase", "Firestore", "FCM", "BLoC"],
+    year: 2026,
+    madeAt: "Personal Project",
+  },
+  {
+    title: "Streamly",
+    description:
+      "An ad-free movie and TV series discovery platform built with Next.js and the TMDB API. Streamly has grown to 1,000+ monthly visitors, 26 GitHub stars, and 7 forks — entirely organically. Features real-time data fetching, dynamic routing, and a clean, personalized browsing experience.",
+    githubLink: "https://github.com/ZaddyAI/Streamly",
+    externalLink: "https://movies.gambhirpoudel.com.np/",
+    tools: ["Next.js", "TMDB", "Tailwind"],
+    year: 2024,
+    madeAt: "Personal Project",
+  },
+  {
+    title: "Nepali Calendar Kit",
+    description:
+      "An open-source npm package for Nepali calendar operations — AD ↔ BS date conversion, date formatting, and a reusable Nepali Date Picker component for React apps. Averaging 4–6 downloads per week from developers building Nepali-language web applications.",
+    githubLink: "https://github.com/ZaddyAI/nepali-calendar-kit",
+    externalLink: "https://nepalicalendarkit.gambhirpoudel.com.np/",
+    tools: ["TypeScript", "Node.js", "React"],
+    year: 2026,
+    madeAt: "Personal Project",
+  },
+  {
+    title: "MediServ",
+    description:
+      "A hackathon UI/UX prototype designed in Figma to help users locate medicines and find nearby medical centers. Built by a team of four at HSM IT Club Hackathon — won 2nd place in the UI/UX design category.",
+    githubLink: "",
+    externalLink:
+      "https://www.figma.com/proto/CsNZevREH3vFfB3oPn8pS0/MEDISERV?node-id=777-543&starting-point-node-id=777%3A543",
+    tools: ["Figma", "Canva"],
+    year: 2023,
+    madeAt: "Hackathon Project — 2nd Place UI/UX",
+  },
+  {
+    title: "Nepflix",
+    description:
+      "A Flutter-based entertainment app for discovering movies and TV shows using the TMDB API. Built with a clean UI and smooth navigation — an early project that sharpened Flutter fundamentals and REST API integration skills.",
+    githubLink: "https://github.com/ZaddyAI/Nepflix",
+    externalLink: "",
+    tools: ["Flutter", "Dart", "TMDB"],
+    year: 2024,
+    madeAt: "Personal Project",
+  },
 ];
 
 export const navLinks = [

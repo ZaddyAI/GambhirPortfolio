@@ -232,6 +232,12 @@
   border-radius: var(--radius-lg);
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   border: 1px solid transparent;
+  z-index: 1;
+}
+
+.experience-card a {
+  position: relative;
+  z-index: 10;
 }
 
 .experience-card::before {
