@@ -51,7 +51,7 @@ export const experiencesData = [
       "Used BLoC for Flutter state management and Redux for React.js, keeping complex app state predictable and maintainable.",
       "Improved app rendering performance and built pixel-perfect responsive UIs across Android and web.",
     ],
-    url: "https://www.linkedin.com/company/kutumba-tech-pvt-ltd/",
+    url: "https://www.kutumbatech.com/",
     tools: ["Flutter", "React.js", "Firebase", "Firestore", "BLoC", "Redux", "eSewa SDK", "REST APIs"],
   },
   {
@@ -65,7 +65,7 @@ export const experiencesData = [
       "Built reusable widget components and responsive layouts that reduced UI duplication across the codebase.",
       "Participated in code reviews and agile sprints, consistently meeting sprint delivery targets.",
     ],
-    url: "https://www.linkedin.com/company/kutumba-tech-pvt-ltd/",
+    url: "https://www.kutumbatech.com/",
     tools: ["Flutter", "Dart", "Firebase", "REST APIs"],
   },
 ];
