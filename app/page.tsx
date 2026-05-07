@@ -393,7 +393,7 @@ function ExperienceSection() {
         className="mt-12"
       >
         <a
-          href="/gambhir.pdf"
+          href="/resume"
           className="inline-flex items-center gap-2 text-[#e2e8f0] font-medium hover:text-[#5eead4] transition-colors group"
         >
           View Full Resume
