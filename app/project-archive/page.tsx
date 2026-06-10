@@ -58,12 +58,12 @@ export default function ProjectArchive() {
                     <p className="mt-2 text-sm text-[#94a3b8] leading-relaxed">
                       {project.description}
                     </p>
-                    <motion.ul 
+                    <motion.ul
                       className="mt-4 flex flex-wrap gap-2"
                     >
                       {project.tools.map((tool, i) => (
-                        <motion.li 
-                          key={i} 
+                        <motion.li
+                          key={i}
                           className="tool-tag"
                         >
                           {tool}
@@ -72,7 +72,7 @@ export default function ProjectArchive() {
                     </motion.ul>
                     <div className="mt-3 flex items-center gap-2 relative z-10">
                       {project.githubLink && (
-                        <a 
+                        <a
                           href={project.githubLink}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -82,7 +82,7 @@ export default function ProjectArchive() {
                         </a>
                       )}
                       {project.externalLink && (
-                        <a 
+                        <a
                           href={project.externalLink}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -92,11 +92,11 @@ export default function ProjectArchive() {
                         </a>
                       )}
                     </div>
-</div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
 
           <motion.footer
             initial={{ opacity: 0 }}
@@ -113,7 +113,7 @@ export default function ProjectArchive() {
               className="w-24 h-px bg-gradient-to-r from-transparent via-[#334155] to-transparent mx-auto mb-8"
             />
             <p className="mb-2">
-              Designed & Built by{" "}
+              Built by{" "}
               <a href="https://gambhirpoudel.com.np" className="text-[#94a3b8] hover:text-[#5eead4] transition-colors" target="_blank" rel="noopener noreferrer">
                 Gambhir Poudel
               </a>

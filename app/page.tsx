@@ -4,13 +4,13 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import Spotlight from "@/components/spotlight"
-import { 
-  name, 
+import {
+  name,
   aboutDescription,
   aboutParagraph2,
-  skills, 
-  experiencesData, 
-  projects, 
+  skills,
+  experiencesData,
+  projects,
   socialLinks,
   email,
   aboutParagraphs
@@ -62,7 +62,7 @@ export default function Home() {
             className="scroll-progress"
             style={{ scaleX }}
           />
-          
+
           <div className="min-h-screen bg-background">
             <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
               <div className="lg:flex lg:justify-between lg:gap-4">
@@ -77,7 +77,7 @@ export default function Home() {
                     >
                       <a href="/">{name}</a>
                     </motion.h1>
-                    
+
                     <motion.h2
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -86,15 +86,15 @@ export default function Home() {
                     >
                       Software Developer
                     </motion.h2>
-                    
+
                     <motion.p
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
                       className="mt-4 max-w-xs leading-relaxed text-[#94a3b8]"
                     >
-                     
-                     {aboutDescription}
+
+                      {aboutDescription}
                     </motion.p>
 
                     {/* Navigation */}
@@ -128,7 +128,7 @@ export default function Home() {
                     className="ml-1 mt-8 flex items-center gap-5"
                     aria-label="Social media"
                   >
-                   <li>
+                    <li>
                       <a
                         href={socialLinks.upwork}
                         target="_blank"
@@ -224,7 +224,7 @@ function Loader() {
           className="w-24 h-24"
           priority
         />
-        
+
         <motion.div
           className="absolute inset-0 rounded-full"
           initial={{ opacity: 0 }}
@@ -235,7 +235,7 @@ function Loader() {
           }}
         />
       </motion.div>
-      
+
       <motion.div
         className="mt-8 flex flex-col items-center gap-3"
         initial={{ opacity: 0, y: 10 }}
@@ -316,7 +316,7 @@ function ExperienceSection() {
   return (
     <section id="experience" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
       <SectionHeader number="02" title="Experience" />
-      
+
       <div className="space-y-6">
         {experiencesData.map((job, index) => (
           <motion.div
@@ -360,7 +360,7 @@ function ExperienceSection() {
                       </li>
                     ))}
                   </ul>
-                  <motion.ul 
+                  <motion.ul
                     className="mt-4 flex flex-wrap gap-2"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -368,8 +368,8 @@ function ExperienceSection() {
                     transition={{ delay: 0.3 }}
                   >
                     {job.tools?.map((tool, i) => (
-                      <motion.li 
-                        key={i} 
+                      <motion.li
+                        key={i}
                         className="tool-tag"
                         whileHover={{ scale: 1.05, y: -2 }}
                         transition={{ duration: 0.2 }}
@@ -409,7 +409,7 @@ function ProjectsSection() {
   return (
     <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
       <SectionHeader number="03" title="Projects" />
-      
+
       <div className="space-y-6">
         {displayedProjects.map((project, index) => (
           <motion.div
@@ -426,7 +426,7 @@ function ProjectsSection() {
             >
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="sm:w-1/4 shrink-0">
-                  <motion.div 
+                  <motion.div
                     className="w-full aspect-video rounded-lg bg-gradient-to-br from-[#1e293b] to-[#0f172a] flex items-center justify-center overflow-hidden border border-[#334155] group-hover:border-[#5eead4]/40 transition-all duration-300"
                     whileHover={{ scale: 1.05 }}
                   >
@@ -446,7 +446,7 @@ function ProjectsSection() {
                   <p className="mt-2 text-sm text-[#94a3b8] leading-relaxed">
                     {project.description}
                   </p>
-                  <motion.ul 
+                  <motion.ul
                     className="mt-4 flex flex-wrap gap-2"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -454,8 +454,8 @@ function ProjectsSection() {
                     transition={{ delay: 0.2 }}
                   >
                     {project.tools.map((tool, i) => (
-                      <motion.li 
-                        key={i} 
+                      <motion.li
+                        key={i}
                         className="tool-tag"
                         whileHover={{ scale: 1.05, y: -2 }}
                         transition={{ duration: 0.2 }}
@@ -466,7 +466,7 @@ function ProjectsSection() {
                   </motion.ul>
                   <div className="mt-3 flex items-center gap-2">
                     {project.githubLink && (
-                      <a 
+                      <a
                         href={project.githubLink}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -476,7 +476,7 @@ function ProjectsSection() {
                       </a>
                     )}
                     {project.externalLink && (
-                      <a 
+                      <a
                         href={project.externalLink}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -522,7 +522,7 @@ function ContactSection() {
         transition={{ duration: 0.6 }}
         className="text-center max-w-md mx-auto"
       >
-        <motion.p 
+        <motion.p
           className="section-number mb-4"
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -531,7 +531,7 @@ function ContactSection() {
         >
           04. What&apos;s Next?
         </motion.p>
-        <motion.h2 
+        <motion.h2
           className="text-4xl sm:text-5xl font-bold text-[#e2e8f0] mb-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -540,7 +540,7 @@ function ContactSection() {
         >
           Get In Touch
         </motion.h2>
-        <motion.p 
+        <motion.p
           className="text-[#94a3b8] mb-10 leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -578,7 +578,7 @@ function ContactSection() {
           className="w-24 h-px bg-gradient-to-r from-transparent via-[#334155] to-transparent mx-auto mb-8"
         />
         <p className="mb-2">
-          Designed & Built by{" "}
+          Built by{" "}
           <a href="https://gambhirpoudel.com.np" className="text-[#94a3b8] hover:text-[#5eead4] transition-colors" target="_blank" rel="noopener noreferrer">
             Gambhir Poudel
           </a>

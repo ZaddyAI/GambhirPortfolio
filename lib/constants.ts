@@ -70,60 +70,6 @@ export const experiencesData = [
   },
 ];
 
-export const services = [
-  {
-    title: "Flutter Mobile Apps",
-    points: [
-      "Cross-platform apps with BLoC/Cubit",
-      "Clean architecture & scalable codebase",
-      "Payment integration — eSewa & Khalti",
-      "FCM push notifications",
-      "Play Store & App Store deployment",
-    ],
-  },
-  {
-    title: "Web Applications",
-    points: [
-      "React, Next.js, Vite with TypeScript",
-      "Redux & modern state management",
-      "SEO-friendly and performant apps",
-    ],
-  },
-  {
-    title: "Backend & APIs",
-    points: [
-      "Node.js & Express REST APIs",
-      "Supabase & Firebase integration",
-      "Secure and scalable architecture",
-    ],
-  },
-  {
-    title: "UI & Frontend",
-    points: [
-      "Pixel-perfect UI with Tailwind CSS",
-      "Responsive & accessible design",
-      "Modern UX practices",
-    ],
-  },
-  {
-    title: "Real-time Features",
-    points: [
-      "WebSockets & live data sync",
-      "Push notifications (FCM)",
-      "Real-time location & order tracking",
-      "Realtime dashboards",
-    ],
-  },
-  {
-    title: "MVP Development",
-    points: [
-      "Fast product validation",
-      "Lean and scalable builds",
-      "Focus on real user feedback",
-    ],
-  },
-];
-
 export const techStack = [
   "Flutter",
   "Dart",
@@ -164,6 +110,16 @@ export const projects = [
     githubLink: "https://github.com/ZaddyAI/Sajilo-Khata",
     externalLink: "",
     tools: ["Flutter", "Dart", "Firebase", "Firestore", "FCM", "BLoC"],
+    year: 2026,
+    madeAt: "Personal Project",
+  },
+  {
+    title: "TouchEasy",
+    description:
+      "TouchEase displays a small semi-transparent circular button that stays on top of all other apps. Tap it to open a radial/grid popup of system controls — power, volume, screenshot, brightness, home, back, recents, and lock screen. The button is draggable and snaps to screen edges.",
+    githubLink: "https://github.com/ZaddyAI/TouchEasy",
+    externalLink: "",
+    tools: ["Flutter", "Dart", "Kotlin", "ServiceLibrary", "AccessibilityServices"],
     year: 2026,
     madeAt: "Personal Project",
   },
