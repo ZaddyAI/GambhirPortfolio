@@ -102,9 +102,23 @@ export const availability = {
   note: "Available across time zones. Open to small paid trial tasks.",
 };
 
-export const projects = [
+export interface Project {
+  title: string
+  slug: string
+  description: string
+  images?: string[]
+  githubLink: string
+  externalLink: string
+  tools: string[]
+  year: number
+  madeAt: string
+  details?: string[]
+}
+
+export const projects: Project[] = [
   {
     title: "Sajilo Khata",
+    slug: "sajilo-khata",
     description:
       "A personal finance tracker built for Nepali users. Sajilo Khata silently reads bank SMS from NIMB, NIC Asia, ADB, and Nabil Bank to automatically log income and expenses — no manual entry needed. Features spending charts, savings goals, FCM push notifications, offline-first architecture with Firestore cloud sync, and manual transaction management.",
     githubLink: "https://github.com/ZaddyAI/Sajilo-Khata",
@@ -112,9 +126,22 @@ export const projects = [
     tools: ["Flutter", "Dart", "Firebase", "Firestore", "FCM", "BLoC"],
     year: 2026,
     madeAt: "Personal Project",
+    images: [
+      "/images/sajilo-khata/loginPage.png",
+      "/images/sajilo-khata/mainDashboard.png",
+      "/images/sajilo-khata/ledgerScreen.png",
+      "/images/sajilo-khata/goalScreen.png",
+    ],
+    details: [
+      "Sajilo Khata is a personal finance management app designed specifically for Nepali users. It simplifies tracking income and expenses by automatically reading bank transaction SMS messages.",
+      "The app supports multiple Nepali banks including NIMB, NIC Asia, ADB, and Nabil Bank. It parses SMS notifications to extract transaction details and categorizes them automatically.",
+      "Key features include spending charts and graphs, savings goal tracking, FCM push notifications for transaction alerts, offline-first architecture with Firestore cloud sync, and manual transaction management for cash-based expenses.",
+      "Built with Flutter and BLoC state management, the app provides a smooth and responsive user experience across Android devices.",
+    ],
   },
   {
     title: "TouchEasy",
+    slug: "toucheasy",
     description:
       "TouchEase displays a small semi-transparent circular button that stays on top of all other apps. Tap it to open a radial/grid popup of system controls — power, volume, screenshot, brightness, home, back, recents, and lock screen. The button is draggable and snaps to screen edges.",
     githubLink: "https://github.com/ZaddyAI/TouchEasy",
@@ -122,9 +149,16 @@ export const projects = [
     tools: ["Flutter", "Dart", "Kotlin", "ServiceLibrary", "AccessibilityServices"],
     year: 2026,
     madeAt: "Personal Project",
+    images: [],
+    details: [
+      "TouchEasy is an Android accessibility service app that provides a floating shortcut button for quick access to system controls. The button overlays on top of all other apps for convenient access.",
+      "The floating button is draggable and smartly snaps to screen edges. Tapping it opens a radial or grid popup menu with system controls including power, volume adjustment, screenshot capture, brightness control, home button, back navigation, recents menu, and lock screen.",
+      "Built with Flutter for the UI layer and Kotlin for the Android service layer, TouchEasy demonstrates deep integration with Android's accessibility and service APIs.",
+    ],
   },
   {
     title: "Streamly",
+    slug: "streamly",
     description:
       "An ad-free movie and TV series discovery platform built with Next.js and the TMDB API. Streamly has grown to 1,000+ monthly visitors, 26 GitHub stars, and 7 forks — entirely organically. Features real-time data fetching, dynamic routing, and a clean, personalized browsing experience.",
     githubLink: "https://github.com/ZaddyAI/Streamly",
@@ -132,9 +166,22 @@ export const projects = [
     tools: ["Next.js", "TMDB", "Tailwind"],
     year: 2024,
     madeAt: "Personal Project",
+    images: [
+      "/images/streamly/homepage.png",
+      "/images/streamly/movies.png",
+      "/images/streamly/details.png",
+      "/images/streamly/player.png",
+      "/images/streamly/tv.png",
+    ],
+    details: [
+      "Streamly is an ad-free movie and TV series discovery platform built with Next.js and powered by the TMDB API. The platform provides a seamless browsing experience for users looking to discover new movies and TV shows without intrusive advertisements.",
+      "Key features include real-time data fetching from TMDB, dynamic routing for detailed movie/series pages, and a personalized recommendation system based on user preferences and viewing history.",
+      "With 1,000+ monthly visitors and 26 GitHub stars, Streamly has gained organic traction as a go-to platform for entertainment discovery.",
+    ],
   },
   {
     title: "Nepali Calendar Kit",
+    slug: "nepali-calendar-kit",
     description:
       "An open-source npm package for Nepali calendar operations — AD ↔ BS date conversion, date formatting, and a reusable Nepali Date Picker component for React apps. Averaging 4–6 downloads per week from developers building Nepali-language web applications.",
     githubLink: "https://github.com/ZaddyAI/nepali-calendar-kit",
@@ -142,9 +189,21 @@ export const projects = [
     tools: ["TypeScript", "Node.js", "React"],
     year: 2026,
     madeAt: "Personal Project",
+    images: [
+      "/images/nepali-calendar-kit/homepage.png",
+      "/images/nepali-calendar-kit/calendar.png",
+      "/images/nepali-calendar-kit/dateconversion.png",
+      "/images/nepali-calendar-kit/dateformat.png",
+    ],
+    details: [
+      "Nepali Calendar Kit is an open-source npm package that provides Nepali calendar functionality for JavaScript and TypeScript applications. It handles AD to BS and BS to AD date conversions with high accuracy.",
+      "The package includes a reusable Nepali Date Picker React component, making it easy for developers to integrate Nepali date selection into their web applications.",
+      "Averaging 4-6 weekly downloads on npm, it serves developers building Nepali-language web applications who need reliable date conversion and calendar functionality.",
+    ],
   },
   {
     title: "MediServ",
+    slug: "mediserv",
     description:
       "A hackathon UI/UX prototype designed in Figma to help users locate medicines and find nearby medical centers. Built by a team of four at HSM IT Club Hackathon — won 2nd place in the UI/UX design category.",
     githubLink: "",
@@ -153,9 +212,12 @@ export const projects = [
     tools: ["Figma", "Canva"],
     year: 2023,
     madeAt: "Hackathon Project — 2nd Place UI/UX",
+    images: [],
+    details: [],
   },
   {
     title: "Nepflix",
+    slug: "nepflix",
     description:
       "A Flutter-based entertainment app for discovering movies and TV shows using the TMDB API. Built with a clean UI and smooth navigation — an early project that sharpened Flutter fundamentals and REST API integration skills.",
     githubLink: "https://github.com/ZaddyAI/Nepflix",
@@ -163,8 +225,18 @@ export const projects = [
     tools: ["Flutter", "Dart", "TMDB"],
     year: 2024,
     madeAt: "Personal Project",
+    images: [],
+    details: [
+      "Nepflix is a Flutter-based movie and TV show discovery app that leverages the TMDB API to provide users with a vast catalog of entertainment content.",
+      "The app features a clean, intuitive UI with smooth navigation, allowing users to browse popular movies, search for specific titles, and view detailed information about each entry.",
+      "This project was instrumental in sharpening Flutter fundamentals and understanding REST API integration patterns, serving as a foundation for more complex Flutter projects.",
+    ],
   },
 ];
+
+export function getProjectBySlug(slug: string): Project | undefined {
+  return projects.find((p) => p.slug === slug)
+}
 
 export const navLinks = [
   { name: "About", url: "#about" },

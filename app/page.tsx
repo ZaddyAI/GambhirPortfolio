@@ -1,6 +1,8 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
 import Spotlight from "@/components/spotlight"
@@ -25,7 +27,16 @@ export default function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 2000)
-    return () => clearTimeout(timer)
+
+    const onPageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) setIsLoading(false)
+    }
+    window.addEventListener('pageshow', onPageShow)
+
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('pageshow', onPageShow)
+    }
   }, [])
 
   useEffect(() => {
@@ -51,153 +62,151 @@ export default function Home() {
 
   return (
     <>
-      <AnimatePresence mode="wait">
+      <AnimatePresence>
         {isLoading && <Loader key="loader" />}
       </AnimatePresence>
 
-      {!isLoading && (
-        <>
-          <Spotlight />
-          <motion.div
-            className="scroll-progress"
-            style={{ scaleX }}
-          />
+      <div className={isLoading ? 'invisible' : ''}>
+        <Spotlight />
+        <motion.div
+          className="scroll-progress"
+          style={{ scaleX }}
+        />
 
-          <div className="min-h-screen bg-background">
-            <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
-              <div className="lg:flex lg:justify-between lg:gap-4">
-                {/* Left Column - Sticky */}
-                <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
-                  <div>
-                    <motion.h1
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="text-4xl font-bold tracking-tight text-[#e2e8f0] sm:text-5xl"
-                    >
-                      <a href="/">{name}</a>
-                    </motion.h1>
-
-                    <motion.h2
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.1 }}
-                      className="mt-3 text-lg font-medium tracking-tight text-[#5eead4] sm:text-xl"
-                    >
-                      Software Developer
-                    </motion.h2>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="mt-4 max-w-xs leading-relaxed text-[#94a3b8]"
-                    >
-
-                      {aboutDescription}
-                    </motion.p>
-
-                    {/* Navigation */}
-                    <nav className="nav hidden lg:block mt-16" aria-label="In-page jump links">
-                      <motion.ul
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.3 }}
-                        className="w-max"
-                      >
-                        {["about", "experience", "projects"].map((item, index) => (
-                          <li key={item}>
-                            <a
-                              href={`#${item}`}
-                              className={`nav-link group ${activeSection === item ? "active" : ""}`}
-                              style={{ transitionDelay: `${index * 50}ms` }}
-                            >
-                              <span>{item}</span>
-                            </a>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    </nav>
-                  </div>
-
-                  {/* Social Links */}
-                  <motion.ul
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.5 }}
-                    className="ml-1 mt-8 flex items-center gap-5"
-                    aria-label="Social media"
+        <div className="min-h-screen bg-background">
+          <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
+            <div className="lg:flex lg:justify-between lg:gap-4">
+              {/* Left Column - Sticky */}
+              <header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+                <div>
+                  <motion.h1
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-4xl font-bold tracking-tight text-[#e2e8f0] sm:text-5xl"
                   >
-                    <li>
-                      <a
-                        href={socialLinks.upwork}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon block"
-                        aria-label="Upwork"
-                      >
-                        <IconUpwork className="h-6 w-6" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={socialLinks.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon block"
-                        aria-label="Instagram"
-                      >
-                        <IconInstagram className="h-6 w-6" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={socialLinks.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon block"
-                        aria-label="GitHub"
-                      >
-                        <IconGitHub className="h-6 w-6" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={socialLinks.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon block"
-                        aria-label="LinkedIn"
-                      >
-                        <IconLinkedin className="h-6 w-6" />
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href={socialLinks.twitter}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon block"
-                        aria-label="Twitter"
-                      >
-                        <IconTwitter className="h-6 w-6" />
-                      </a>
-                    </li>
-                  </motion.ul>
-                </header>
+                    <a href="/">{name}</a>
+                  </motion.h1>
 
-                {/* Right Column - Scrollable Content */}
-                <main className="pt-24 lg:w-1/2 lg:py-24">
-                  <AboutSection />
-                  <ExperienceSection />
-                  <ProjectsSection />
-                  <ContactSection />
-                </main>
-              </div>
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="mt-3 text-lg font-medium tracking-tight text-[#5eead4] sm:text-xl"
+                  >
+                    Software Developer
+                  </motion.h2>
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="mt-4 max-w-xs leading-relaxed text-[#94a3b8]"
+                  >
+
+                    {aboutDescription}
+                  </motion.p>
+
+                  {/* Navigation */}
+                  <nav className="nav hidden lg:block mt-16" aria-label="In-page jump links">
+                    <motion.ul
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                      className="w-max"
+                    >
+                      {["about", "experience", "projects"].map((item, index) => (
+                        <li key={item}>
+                          <a
+                            href={`#${item}`}
+                            className={`nav-link group ${activeSection === item ? "active" : ""}`}
+                            style={{ transitionDelay: `${index * 50}ms` }}
+                          >
+                            <span>{item}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  </nav>
+                </div>
+
+                {/* Social Links */}
+                <motion.ul
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  className="ml-1 mt-8 flex items-center gap-5"
+                  aria-label="Social media"
+                >
+                  <li>
+                    <a
+                      href={socialLinks.upwork}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon block"
+                      aria-label="Upwork"
+                    >
+                      <IconUpwork className="h-6 w-6" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLinks.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon block"
+                      aria-label="Instagram"
+                    >
+                      <IconInstagram className="h-6 w-6" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLinks.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon block"
+                      aria-label="GitHub"
+                    >
+                      <IconGitHub className="h-6 w-6" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLinks.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon block"
+                      aria-label="LinkedIn"
+                    >
+                      <IconLinkedin className="h-6 w-6" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLinks.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon block"
+                      aria-label="Twitter"
+                    >
+                      <IconTwitter className="h-6 w-6" />
+                    </a>
+                  </li>
+                </motion.ul>
+              </header>
+
+              {/* Right Column - Scrollable Content */}
+              <main className="pt-24 lg:w-1/2 lg:py-24">
+                <AboutSection />
+                <ExperienceSection />
+                <ProjectsSection />
+                <ContactSection />
+              </main>
             </div>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   )
 }
@@ -405,6 +414,7 @@ function ExperienceSection() {
 }
 
 function ProjectsSection() {
+  const router = useRouter()
   const displayedProjects = projects.slice(0, 4)
   return (
     <section id="projects" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24">
@@ -420,7 +430,8 @@ function ProjectsSection() {
             transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
           >
             <motion.div
-              className="experience-card group block"
+              className="experience-card group block cursor-pointer"
+              onClick={() => router.push(`/projects/${project.slug}`)}
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
@@ -470,6 +481,7 @@ function ProjectsSection() {
                         href={project.githubLink}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="inline-flex p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors !z-[50]"
                       >
                         <IconGitHub className="w-5 h-5" />
@@ -480,6 +492,7 @@ function ProjectsSection() {
                         href={project.externalLink}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
                         className="inline-flex p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors !z-[50]"
                       >
                         <IconExternal className="w-5 h-5" />
