@@ -122,7 +122,7 @@ export const projects: Project[] = [
     description:
       "A personal finance tracker for Nepali users that automatically reads bank SMS from NIMB, NIC Asia, ADB, and Nabil Bank to log income and expenses — no manual entry needed. Includes spending charts, BS-calendar savings goals, FCM push notifications, and offline-first architecture with Firestore sync.",
     githubLink: "https://github.com/ZaddyAI/Sajilo-Khata",
-    externalLink: "",
+    externalLink: "https://sajilokhata.gambhirpoudel.com.np",
     tools: ["Flutter", "Dart", "Firebase", "Firestore", "FCM", "BLoC"],
     year: 2026,
     madeAt: "Personal Project",
