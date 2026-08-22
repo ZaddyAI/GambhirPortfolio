@@ -16,19 +16,36 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
-const baseUrl = 'https://www.gambhirpoudel.com.np'
+
+const baseUrl = 'https://www.gambhirpoudel.com.np';
 
 export const metadata: Metadata = {
-  title: 'Gambhir Poudel',
-  description: 'Gambhir Poudel - Mobile & Frontend Engineer. Building things for the web & mobile.',
-  keywords: ['Gambhir Poudel', 'Software Developer', 'Flutter Developer', 'React Developer', 'Portfolio'],
-  authors: [{ name: 'Gambhir Poudel' }],
+  metadataBase: new URL(baseUrl),
+  title: {
+    default: 'Gambhir Poudel | Mobile & Frontend Engineer',
+    template: '%s | Gambhir Poudel',
+  },
+  description:
+    'Portfolio of Gambhir Poudel, a Mobile & Frontend Engineer crafting fast, polished apps and websites with Flutter, React, and Next.js.',
+  keywords: [
+    'Gambhir Poudel',
+    'Mobile Engineer',
+    'Frontend Engineer',
+    'Flutter Developer',
+    'React Developer',
+    'Next.js Developer',
+    'Software Engineer Nepal',
+    'Portfolio',
+  ],
+  authors: [{ name: 'Gambhir Poudel', url: baseUrl }],
+  creator: 'Gambhir Poudel',
   icons: {
     icon: '/greenLogo.png',
   },
   openGraph: {
-    title: 'Gambhir Poudel',
-    description: 'Gambhir Poudel - Mobile & Frontend Engineer. Building things for the web & mobile.',
+    title: 'Gambhir Poudel | Mobile & Frontend Engineer',
+    description:
+      'Portfolio of Gambhir Poudel, a Mobile & Frontend Engineer crafting fast, polished apps and websites with Flutter, React, and Next.js.',
     type: 'website',
     siteName: 'Gambhir Poudel',
     url: baseUrl,
@@ -43,8 +60,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Gambhir Poudel',
-    description: 'Gambhir Poudel - Mobile & Frontend Engineer. Building things for the web & mobile.',
+    title: 'Gambhir Poudel | Mobile & Frontend Engineer',
+    description:
+      'Portfolio of Gambhir Poudel, a Mobile & Frontend Engineer crafting fast, polished apps and websites with Flutter, React, and Next.js.',
     images: [`${baseUrl}/greenLogo.png`],
   },
 }
