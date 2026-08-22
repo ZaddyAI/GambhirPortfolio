@@ -7,7 +7,7 @@ import Image from "next/image"
 import { motion } from "framer-motion"
 import Spotlight from "@/components/spotlight"
 import { getProjectBySlug } from "@/lib/constants"
-import { IconGitHub, IconExternal, IconFolder } from "@/components/icons"
+import { IconGitHub, IconExternal, IconFolder, IconPlayStore } from "@/components/icons"
 import { useToast } from "@/hooks/use-toast"
 
 export default function ProjectContent() {
@@ -120,6 +120,17 @@ export default function ProjectContent() {
                   >
                     <IconExternal className="w-4 h-4" />
                     Live Demo
+                  </a>
+                )}
+                {project.playstoreLink && (
+                  <a
+                    href={project.playstoreLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors text-sm font-medium"
+                  >
+                    <IconPlayStore className="w-4 h-4" />
+                    Play Store
                   </a>
                 )}
               </div>

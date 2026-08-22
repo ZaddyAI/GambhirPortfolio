@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion"
@@ -17,7 +16,7 @@ import {
   email,
   aboutParagraphs
 } from "@/lib/constants"
-import { IconGitHub, IconLinkedin, IconTwitter, IconExternal, IconFolder, IconInstagram, IconUpwork } from "@/components/icons"
+import { IconGitHub, IconLinkedin, IconExternal, IconFolder, IconInstagram, IconWhatsapp, IconPlayStore } from "@/components/icons"
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true)
@@ -128,6 +127,25 @@ export default function Home() {
                       ))}
                     </motion.ul>
                   </nav>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="mt-6"
+                  >
+                    <a
+                      href="/resume"
+                      className="button-primary !py-2.5 !px-5 !text-xs"
+                    >
+                      <span>Resume</span>
+                      <svg className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                        <polyline points="15 3 21 3 21 9" />
+                        <line x1="10" y1="14" x2="21" y2="3" />
+                      </svg>
+                    </a>
+                  </motion.div>
                 </div>
 
                 {/* Social Links */}
@@ -138,28 +156,7 @@ export default function Home() {
                   className="ml-1 mt-8 flex items-center gap-5"
                   aria-label="Social media"
                 >
-                  <li>
-                    <a
-                      href={socialLinks.upwork}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-icon block"
-                      aria-label="Upwork"
-                    >
-                      <IconUpwork className="h-6 w-6" />
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href={socialLinks.instagram}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="social-icon block"
-                      aria-label="Instagram"
-                    >
-                      <IconInstagram className="h-6 w-6" />
-                    </a>
-                  </li>
+
                   <li>
                     <a
                       href={socialLinks.github}
@@ -184,13 +181,24 @@ export default function Home() {
                   </li>
                   <li>
                     <a
-                      href={socialLinks.twitter}
+                      href={socialLinks.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="social-icon block"
-                      aria-label="Twitter"
+                      aria-label="Instagram"
                     >
-                      <IconTwitter className="h-6 w-6" />
+                      <IconInstagram className="h-6 w-6" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href={socialLinks.whatsapp}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon block"
+                      aria-label="WhatsApp"
+                    >
+                      <IconWhatsapp className="h-6 w-6" />
                     </a>
                   </li>
                 </motion.ul>
@@ -393,22 +401,6 @@ function ExperienceSection() {
           </motion.div>
         ))}
       </div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-        className="mt-12"
-      >
-        <a
-          href="/resume"
-          className="inline-flex items-center gap-2 text-[#e2e8f0] font-medium hover:text-[#5eead4] transition-colors group"
-        >
-          View Full Resume
-          <span className="group-hover:translate-x-1 transition-transform">→</span>
-        </a>
-      </motion.div>
     </section>
   )
 }
@@ -496,6 +488,17 @@ function ProjectsSection() {
                         className="inline-flex p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors !z-[50]"
                       >
                         <IconExternal className="w-5 h-5" />
+                      </a>
+                    )}
+                    {project.playstoreLink && (
+                      <a
+                        href={project.playstoreLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors !z-[50]"
+                      >
+                        <IconPlayStore className="w-5 h-5" />
                       </a>
                     )}
                   </div>

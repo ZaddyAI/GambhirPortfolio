@@ -6,8 +6,7 @@ export const socialLinks = {
   github: "https://github.com/ZaddyAI",
   linkedin: "https://www.linkedin.com/in/gambhirpoudel/",
   twitter: "https://x.com/gambhirpoudel",
-  upwork:
-    "https://www.upwork.com/freelancers/~0179c4b07fcedadd61?mp_source=share",
+  whatsapp: "https://wa.me/9742503468",
 };
 
 export const skills = [
@@ -109,6 +108,7 @@ export interface Project {
   images?: string[]
   githubLink: string
   externalLink: string
+  playstoreLink?: string
   tools: string[]
   year: number
   madeAt: string
@@ -123,14 +123,19 @@ export const projects: Project[] = [
       "A personal finance tracker for Nepali users that automatically reads bank SMS from NIMB, NIC Asia, ADB, and Nabil Bank to log income and expenses — no manual entry needed. Includes spending charts, BS-calendar savings goals, FCM push notifications, and offline-first architecture with Firestore sync.",
     githubLink: "https://github.com/ZaddyAI/Sajilo-Khata",
     externalLink: "https://sajilokhata.gambhirpoudel.com.np",
-    tools: ["Flutter", "Dart", "Firebase", "Firestore", "FCM", "BLoC"],
+    playstoreLink: "https://play.google.com/store/apps/details?id=com.zaddyai.sajilokhata",
+    tools: ["Flutter", "Dart", "Firebase", "Firestore", "FCM", "BLoC", "Hive"],
     year: 2026,
     madeAt: "Personal Project",
     images: [
-      "/images/sajilo-khata/loginPage.png",
-      "/images/sajilo-khata/mainDashboard.png",
-      "/images/sajilo-khata/ledgerScreen.png",
-      "/images/sajilo-khata/goalScreen.png",
+      "/images/sajilo-khata/dashboard.png",
+      "/images/sajilo-khata/ledger.png",
+      "/images/sajilo-khata/add-transaction.png",
+      "/images/sajilo-khata/goals.png",
+      "/images/sajilo-khata/addNewGoal.png",
+      "/images/sajilo-khata/addSavings.png",
+      "/images/sajilo-khata/profile.png",
+      "/images/sajilo-khata/sms-tracking.png",
     ],
     details: [
       "Sajilo Khata is a Flutter app that automatically tracks income and expenses by reading SMS messages from major Nepali banks and digital wallets, removing the need for manual transaction entry. Users can also add cash transactions manually.",

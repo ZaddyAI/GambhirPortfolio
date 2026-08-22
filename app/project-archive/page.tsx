@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import Spotlight from "@/components/spotlight"
 import { projects } from "@/lib/constants"
-import { IconGitHub, IconExternal } from "@/components/icons"
+import { IconGitHub, IconExternal, IconPlayStore } from "@/components/icons"
 
 export default function ProjectArchive() {
   const router = useRouter()
@@ -94,6 +94,17 @@ export default function ProjectArchive() {
                           className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
                         >
                           <IconExternal className="w-5 h-5" />
+                        </a>
+                      )}
+                      {project.playstoreLink && (
+                        <a
+                          href={project.playstoreLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
+                        >
+                          <IconPlayStore className="w-5 h-5" />
                         </a>
                       )}
                     </div>
