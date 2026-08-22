@@ -29,6 +29,7 @@ export default function ProjectContent() {
   }, [project])
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [carouselIndex, setCarouselIndex] = useState(0)
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
 
@@ -41,6 +42,16 @@ export default function ProjectContent() {
     if (lightboxIndex === null || !project?.images) return
     setLightboxIndex((lightboxIndex - 1 + project.images!.length) % project.images!.length)
   }, [lightboxIndex, project])
+
+  const carouselNext = useCallback(() => {
+    if (!project?.images) return
+    setCarouselIndex((carouselIndex + 1) % project.images.length)
+  }, [carouselIndex, project])
+
+  const carouselPrev = useCallback(() => {
+    if (!project?.images) return
+    setCarouselIndex((carouselIndex - 1 + project.images.length) % project.images.length)
+  }, [carouselIndex, project])
 
   if (!project) {
     return (
@@ -147,27 +158,53 @@ export default function ProjectContent() {
                 <h2 className="text-sm font-semibold text-[#e2e8f0] mb-5 uppercase tracking-wider">
                   Screenshots
                 </h2>
-                <div className="columns-2 sm:columns-3 gap-4">
-                  {project.images.map((img, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 12 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.3, delay: i * 0.06 }}
-                      className="break-inside-avoid mb-4 rounded-lg overflow-hidden border border-[#334155] bg-[#1e293b] cursor-pointer"
-                      onClick={() => setLightboxIndex(i)}
-                    >
-                      <Image
-                        src={img}
-                        alt={`${project.title} screenshot ${i + 1}`}
-                        width={800}
-                        height={600}
-                        className="w-full h-auto"
-                      />
-                    </motion.div>
-                  ))}
+                <div className="relative group">
+                  <div
+                    className="rounded-lg overflow-hidden border border-[#334155] bg-[#1e293b] cursor-pointer flex items-center justify-center"
+                    onClick={() => setLightboxIndex(carouselIndex)}
+                  >
+                    <Image
+                      src={project.images[carouselIndex]}
+                      alt={`${project.title} screenshot ${carouselIndex + 1}`}
+                      width={800}
+                      height={600}
+                      className="w-full h-auto max-h-[500px] object-contain"
+                    />
+                  </div>
+
+                  {project.images.length > 1 && (
+                    <>
+                      <button
+                        onClick={carouselPrev}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0f172a]/80 text-[#e2e8f0] flex items-center justify-center hover:bg-[#1e293b] transition-all opacity-0 group-hover:opacity-100 text-base border border-[#334155]"
+                      >
+                        ←
+                      </button>
+                      <button
+                        onClick={carouselNext}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0f172a]/80 text-[#e2e8f0] flex items-center justify-center hover:bg-[#1e293b] transition-all opacity-0 group-hover:opacity-100 text-base border border-[#334155]"
+                      >
+                        →
+                      </button>
+                    </>
+                  )}
                 </div>
+
+                {project.images.length > 1 && (
+                  <div className="flex items-center justify-center gap-2 mt-4">
+                    {project.images.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCarouselIndex(i)}
+                        className={`h-2 rounded-full transition-all duration-300 ${i === carouselIndex
+                          ? "bg-[#5eead4] w-4"
+                          : "bg-[#334155] hover:bg-[#475569] w-2"
+                          }`}
+                        aria-label={`Go to image ${i + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
               </motion.div>
             )}
 
@@ -209,6 +246,7 @@ export default function ProjectContent() {
           onClose={closeLightbox}
           onPrev={goPrev}
           onNext={goNext}
+          onGoTo={setLightboxIndex}
         />
       )}
     </>
@@ -222,6 +260,7 @@ function Lightbox({
   onClose,
   onPrev,
   onNext,
+  onGoTo,
 }: {
   images: string[]
   index: number
@@ -229,6 +268,7 @@ function Lightbox({
   onClose: () => void
   onPrev: () => void
   onNext: () => void
+  onGoTo: (index: number) => void
 }) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -296,6 +336,22 @@ function Lightbox({
         <p className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-[#64748b] whitespace-nowrap">
           {index + 1} / {images.length}
         </p>
+
+        {images.length > 1 && (
+          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => { e.stopPropagation(); onGoTo(i) }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index
+                  ? "bg-[#5eead4] w-4"
+                  : "bg-[#334155] hover:bg-[#475569]"
+                  }`}
+                aria-label={`Go to image ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </motion.div>
     </motion.div>
   )

@@ -16,9 +16,11 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 })
 
+const baseUrl = 'https://www.gambhirpoudel.com.np'
+
 export const metadata: Metadata = {
   title: 'Gambhir Poudel',
-  description: 'Gambhir Poudel - Software Developer Portfolio. Building things for the web & mobile.',
+  description: 'Gambhir Poudel - Mobile & Frontend Engineer. Building things for the web & mobile.',
   keywords: ['Gambhir Poudel', 'Software Developer', 'Flutter Developer', 'React Developer', 'Portfolio'],
   authors: [{ name: 'Gambhir Poudel' }],
   icons: {
@@ -26,8 +28,24 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Gambhir Poudel',
-    description: 'Software Developer Portfolio',
+    description: 'Gambhir Poudel - Mobile & Frontend Engineer. Building things for the web & mobile.',
     type: 'website',
+    siteName: 'Gambhir Poudel',
+    url: baseUrl,
+    images: [
+      {
+        url: `${baseUrl}/greenLogo.png`,
+        width: 1200,
+        height: 630,
+        alt: 'Gambhir Poudel - Mobile & Frontend Engineer',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Gambhir Poudel',
+    description: 'Gambhir Poudel - Mobile & Frontend Engineer. Building things for the web & mobile.',
+    images: [`${baseUrl}/greenLogo.png`],
   },
 }
 
