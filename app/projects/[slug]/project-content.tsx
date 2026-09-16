@@ -6,8 +6,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { motion } from "framer-motion"
 import Spotlight from "@/components/spotlight"
+import ImageViewer from "@/components/image-viewer"
 import { getProjectBySlug } from "@/lib/constants"
-import { IconGitHub, IconExternal, IconFolder, IconPlayStore } from "@/components/icons"
+import { IconGitHub, IconExternal, IconFolder, IconPlayStore, IconDownload, IconChevronLeft, IconChevronRight } from "@/components/icons"
 import { useToast } from "@/hooks/use-toast"
 
 export default function ProjectContent() {
@@ -52,6 +53,21 @@ export default function ProjectContent() {
     if (!project?.images) return
     setCarouselIndex((carouselIndex - 1 + project.images.length) % project.images.length)
   }, [carouselIndex, project])
+
+  const handleDownloadImage = useCallback(() => {
+    if (!project?.images) return
+    const link = document.createElement("a")
+    link.href = project.images[carouselIndex]
+    link.download = `${project.title.toLowerCase().replace(/\s+/g, "-")}-screenshot-${carouselIndex + 1}.png`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }, [project, carouselIndex])
+
+  const getImageName = (path: string) => {
+    const filename = path.split("/").pop() || ""
+    return filename.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ")
+  }
 
   if (!project) {
     return (
@@ -155,56 +171,64 @@ export default function ProjectContent() {
                 transition={{ duration: 0.5 }}
                 className="mb-10 pb-10 border-b border-[#1e293b]"
               >
-                <h2 className="text-sm font-semibold text-[#e2e8f0] mb-5 uppercase tracking-wider">
-                  Screenshots
-                </h2>
-                <div className="relative group">
-                  <div
-                    className="rounded-lg overflow-hidden border border-[#334155] bg-[#1e293b] cursor-pointer flex items-center justify-center"
-                    onClick={() => setLightboxIndex(carouselIndex)}
-                  >
-                    <Image
-                      src={project.images[carouselIndex]}
-                      alt={`${project.title} screenshot ${carouselIndex + 1}`}
-                      width={800}
-                      height={600}
-                      className="w-full h-auto max-h-[500px] object-contain"
-                    />
-                  </div>
-
-                  {project.images.length > 1 && (
-                    <>
-                      <button
-                        onClick={carouselPrev}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0f172a]/80 text-[#e2e8f0] flex items-center justify-center hover:bg-[#1e293b] transition-all opacity-0 group-hover:opacity-100 text-base border border-[#334155]"
-                      >
-                        ←
-                      </button>
-                      <button
-                        onClick={carouselNext}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#0f172a]/80 text-[#e2e8f0] flex items-center justify-center hover:bg-[#1e293b] transition-all opacity-0 group-hover:opacity-100 text-base border border-[#334155]"
-                      >
-                        →
-                      </button>
-                    </>
-                  )}
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="section-number">01.</span>
+                  <h2 className="text-sm font-semibold text-[#e2e8f0] uppercase tracking-wider">
+                    Screenshots
+                  </h2>
+                  <div className="flex-1 h-px bg-[#1e293b]" />
+                </div>
+                <div
+                  className="rounded-xl overflow-hidden border border-[#334155] bg-[#0f172a] cursor-pointer flex items-center justify-center"
+                  onClick={() => setLightboxIndex(carouselIndex)}
+                >
+                  <Image
+                    src={project.images[carouselIndex]}
+                    alt={`${project.title} screenshot ${carouselIndex + 1}`}
+                    width={800}
+                    height={600}
+                    className="w-full h-auto max-h-[500px] object-contain"
+                  />
                 </div>
 
-                {project.images.length > 1 && (
-                  <div className="flex items-center justify-center gap-2 mt-4">
-                    {project.images.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setCarouselIndex(i)}
-                        className={`h-2 rounded-full transition-all duration-300 ${i === carouselIndex
-                          ? "bg-[#5eead4] w-4"
-                          : "bg-[#334155] hover:bg-[#475569] w-2"
-                          }`}
-                        aria-label={`Go to image ${i + 1}`}
-                      />
-                    ))}
+                <div className="mt-4 p-3 rounded-2xl bg-[#1e293b]/90 backdrop-blur-md border border-[#334155]">
+                  <div className="flex items-center gap-2 sm:gap-4">
+                    <button
+                      onClick={carouselPrev}
+                      disabled={project.images.length <= 1}
+                      className="w-9 h-9 rounded-full border border-[#334155] bg-[#0f172a]/50 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
+                      aria-label="Previous image"
+                    >
+                      <IconChevronLeft className="w-4 h-4" />
+                    </button>
+
+                    <button
+                      onClick={carouselNext}
+                      disabled={project.images.length <= 1}
+                      className="w-9 h-9 rounded-full border border-[#334155] bg-[#0f172a]/50 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
+                      aria-label="Next image"
+                    >
+                      <IconChevronRight className="w-4 h-4" />
+                    </button>
+
+                    <div className="flex items-center gap-2 text-sm ml-2 min-w-0">
+                      <span className="text-[#5eead4] font-semibold font-mono hidden sm:inline capitalize">{getImageName(project.images[carouselIndex])}</span>
+                      <span className="text-[#64748b] hidden sm:inline">/</span>
+                      <span className="text-[#e2e8f0] truncate hidden sm:inline">{project.title}</span>
+                      <span className="text-[#64748b] ml-auto sm:ml-2 shrink-0">
+                        {carouselIndex + 1} / {project.images.length}
+                      </span>
+                    </div>
+
+                    <button
+                      onClick={handleDownloadImage}
+                      className="ml-auto button-primary !py-2 !px-3 sm:!px-4 !text-xs shrink-0"
+                    >
+                      <IconDownload className="w-4 h-4" />
+                      <span className="hidden sm:inline">Download</span>
+                    </button>
                   </div>
-                )}
+                </div>
               </motion.div>
             )}
 
@@ -215,9 +239,13 @@ export default function ProjectContent() {
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5 }}
               >
-                <h2 className="text-sm font-semibold text-[#e2e8f0] mb-5 uppercase tracking-wider">
-                  Documentation
-                </h2>
+                <div className="flex items-center gap-3 mb-5">
+                  <span className="section-number">02.</span>
+                  <h2 className="text-sm font-semibold text-[#e2e8f0] uppercase tracking-wider">
+                    Documentation
+                  </h2>
+                  <div className="flex-1 h-px bg-[#1e293b]" />
+                </div>
                 <div className="space-y-4">
                   {project.details.map((paragraph, index) => (
                     <motion.p
@@ -239,7 +267,7 @@ export default function ProjectContent() {
       </div>
 
       {lightboxIndex !== null && project.images && (
-        <Lightbox
+        <ImageViewer
           images={project.images}
           index={lightboxIndex}
           title={project.title}
@@ -250,109 +278,5 @@ export default function ProjectContent() {
         />
       )}
     </>
-  )
-}
-
-function Lightbox({
-  images,
-  index,
-  title,
-  onClose,
-  onPrev,
-  onNext,
-  onGoTo,
-}: {
-  images: string[]
-  index: number
-  title: string
-  onClose: () => void
-  onPrev: () => void
-  onNext: () => void
-  onGoTo: (index: number) => void
-}) {
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose()
-      if (e.key === "ArrowRight") onNext()
-      if (e.key === "ArrowLeft") onPrev()
-    }
-    document.addEventListener("keydown", handler)
-    document.body.style.overflow = "hidden"
-    return () => {
-      document.removeEventListener("keydown", handler)
-      document.body.style.overflow = ""
-    }
-  }, [onClose, onNext, onPrev])
-
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f172a]/95 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      <motion.div
-        key={index}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.2 }}
-        className="relative inline-flex max-w-[90vw] max-h-[85vh]"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <Image
-          src={images[index]}
-          alt={`${title} screenshot ${index + 1}`}
-          width={1200}
-          height={800}
-          className="max-w-full max-h-[85vh] w-auto h-auto object-contain rounded-lg"
-          priority
-        />
-
-        <button
-          onClick={onClose}
-          className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-[#1e293b] text-[#94a3b8] hover:text-[#e2e8f0] flex items-center justify-center text-sm transition-colors shadow-lg border border-[#334155]"
-        >
-          ✕
-        </button>
-
-        {images.length > 1 && (
-          <>
-            <button
-              onClick={(e) => { e.stopPropagation(); onPrev() }}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#1e293b]/80 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-colors text-base"
-            >
-              ←
-            </button>
-            <button
-              onClick={(e) => { e.stopPropagation(); onNext() }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-[#1e293b]/80 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-colors text-base"
-            >
-              →
-            </button>
-          </>
-        )}
-
-        <p className="absolute -bottom-7 left-1/2 -translate-x-1/2 text-sm text-[#64748b] whitespace-nowrap">
-          {index + 1} / {images.length}
-        </p>
-
-        {images.length > 1 && (
-          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2">
-            {images.map((_, i) => (
-              <button
-                key={i}
-                onClick={(e) => { e.stopPropagation(); onGoTo(i) }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${i === index
-                  ? "bg-[#5eead4] w-4"
-                  : "bg-[#334155] hover:bg-[#475569]"
-                  }`}
-                aria-label={`Go to image ${i + 1}`}
-              />
-            ))}
-          </div>
-        )}
-      </motion.div>
-    </motion.div>
   )
 }
