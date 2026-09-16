@@ -27,10 +27,10 @@ export default function ImageViewer({
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
-      if (e.key === "ArrowRight") onNext()
-      if (e.key === "ArrowLeft") onPrev()
+      if (e.key === "ArrowRight" && index < images.length - 1) onNext()
+      if (e.key === "ArrowLeft" && index > 0) onPrev()
     },
-    [onClose, onNext, onPrev]
+    [onClose, onNext, onPrev, index, images.length]
   )
 
   useEffect(() => {
@@ -105,8 +105,12 @@ export default function ImageViewer({
               e.stopPropagation()
               onPrev()
             }}
-            disabled={images.length <= 1}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#334155] bg-[#0f172a]/50 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-[#0f172a]/50 shrink-0"
+            disabled={index === 0}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border bg-[#0f172a]/50 flex items-center justify-center transition-all shrink-0 ${
+              index === 0
+                ? "border-[#1e293b] text-[#475569]"
+                : "border-[#334155] text-[#e2e8f0] hover:bg-[#334155]"
+            }`}
             aria-label="Previous image"
           >
             <IconChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -117,8 +121,12 @@ export default function ImageViewer({
               e.stopPropagation()
               onNext()
             }}
-            disabled={images.length <= 1}
-            className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#334155] bg-[#0f172a]/50 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-all disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-[#0f172a]/50 shrink-0"
+            disabled={index === images.length - 1}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full border bg-[#0f172a]/50 flex items-center justify-center transition-all shrink-0 ${
+              index === images.length - 1
+                ? "border-[#1e293b] text-[#475569]"
+                : "border-[#334155] text-[#e2e8f0] hover:bg-[#334155]"
+            }`}
             aria-label="Next image"
           >
             <IconChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />

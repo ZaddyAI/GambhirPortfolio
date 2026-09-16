@@ -195,8 +195,12 @@ export default function ProjectContent() {
                   <div className="flex items-center gap-2 sm:gap-4">
                     <button
                       onClick={carouselPrev}
-                      disabled={project.images.length <= 1}
-                      className="w-9 h-9 rounded-full border border-[#334155] bg-[#0f172a]/50 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
+                      disabled={carouselIndex === 0}
+                      className={`w-9 h-9 rounded-full border bg-[#0f172a]/50 flex items-center justify-center transition-all shrink-0 ${
+                        carouselIndex === 0
+                          ? "border-[#1e293b] text-[#475569]"
+                          : "border-[#334155] text-[#e2e8f0] hover:bg-[#334155]"
+                      }`}
                       aria-label="Previous image"
                     >
                       <IconChevronLeft className="w-4 h-4" />
@@ -204,8 +208,12 @@ export default function ProjectContent() {
 
                     <button
                       onClick={carouselNext}
-                      disabled={project.images.length <= 1}
-                      className="w-9 h-9 rounded-full border border-[#334155] bg-[#0f172a]/50 text-[#e2e8f0] flex items-center justify-center hover:bg-[#334155] transition-all disabled:opacity-30 disabled:cursor-not-allowed shrink-0"
+                      disabled={carouselIndex === project.images.length - 1}
+                      className={`w-9 h-9 rounded-full border bg-[#0f172a]/50 flex items-center justify-center transition-all shrink-0 ${
+                        carouselIndex === project.images.length - 1
+                          ? "border-[#1e293b] text-[#475569]"
+                          : "border-[#334155] text-[#e2e8f0] hover:bg-[#334155]"
+                      }`}
                       aria-label="Next image"
                     >
                       <IconChevronRight className="w-4 h-4" />
