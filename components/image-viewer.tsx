@@ -124,11 +124,11 @@ export default function ImageViewer({
             <IconChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
-          <div className="flex items-center gap-2 text-sm ml-2 min-w-0">
-            <span className="text-[#5eead4] font-semibold font-mono hidden sm:inline capitalize">{getImageName(images[index])}</span>
+          <div className="flex items-center gap-2 text-sm ml-2 min-w-0 overflow-hidden">
+            <span className="text-[#5eead4] font-semibold font-mono capitalize truncate">{getImageName(images[index])}</span>
             <span className="text-[#64748b] hidden sm:inline">/</span>
             <span className="text-[#e2e8f0] truncate hidden sm:inline">{title}</span>
-            <span className="text-[#64748b] ml-auto sm:ml-2 shrink-0">
+            <span className="text-[#64748b] ml-auto shrink-0">
               {index + 1} / {images.length}
             </span>
           </div>

@@ -211,11 +211,11 @@ export default function ProjectContent() {
                       <IconChevronRight className="w-4 h-4" />
                     </button>
 
-                    <div className="flex items-center gap-2 text-sm ml-2 min-w-0">
-                      <span className="text-[#5eead4] font-semibold font-mono hidden sm:inline capitalize">{getImageName(project.images[carouselIndex])}</span>
+                    <div className="flex items-center gap-2 text-sm ml-2 min-w-0 overflow-hidden">
+                      <span className="text-[#5eead4] font-semibold font-mono capitalize truncate">{getImageName(project.images[carouselIndex])}</span>
                       <span className="text-[#64748b] hidden sm:inline">/</span>
                       <span className="text-[#e2e8f0] truncate hidden sm:inline">{project.title}</span>
-                      <span className="text-[#64748b] ml-auto sm:ml-2 shrink-0">
+                      <span className="text-[#64748b] ml-auto shrink-0">
                         {carouselIndex + 1} / {project.images.length}
                       </span>
                     </div>

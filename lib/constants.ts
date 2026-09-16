@@ -132,8 +132,8 @@ export const projects: Project[] = [
       "/images/sajilo-khata/ledger.png",
       "/images/sajilo-khata/add-transaction.png",
       "/images/sajilo-khata/goals.png",
-      "/images/sajilo-khata/addNewGoal.png",
-      "/images/sajilo-khata/addSavings.png",
+      "/images/sajilo-khata/add-New-Goal.png",
+      "/images/sajilo-khata/add-Savings.png",
       "/images/sajilo-khata/profile.png",
       "/images/sajilo-khata/sms-tracking.png",
     ],
@@ -199,8 +199,8 @@ export const projects: Project[] = [
     images: [
       "/images/nepali-calendar-kit/homepage.png",
       "/images/nepali-calendar-kit/calendar.png",
-      "/images/nepali-calendar-kit/dateconversion.png",
-      "/images/nepali-calendar-kit/dateformat.png",
+      "/images/nepali-calendar-kit/date-conversion.png",
+      "/images/nepali-calendar-kit/date-format.png",
     ],
     details: [
       "Nepali Calendar Kit is a lightweight, fully TypeScript-typed React library for converting between AD (Gregorian) and BS (Bikram Sambat) dates, with utilities like adToBs, bsToAd, formatBs, and formatAd supporting multiple display formats and Nepali numerals.",
