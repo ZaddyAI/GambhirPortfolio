@@ -209,38 +209,6 @@ export const projects: Project[] = [
       "Published on npm and averaging 4-6 downloads per week, the package serves developers building Nepali-language web applications who need reliable BS calendar support, and is used internally to power the Sajilo Khata app's BS date features.",
     ],
   },
-  {
-    title: "Nepflix",
-    slug: "nepflix",
-    description:
-      "A Flutter-based entertainment app for discovering movies and TV shows via the TMDB API, featuring trending titles, top-rated picks, popular TV shows, and upcoming releases. An early project that sharpened Flutter fundamentals and REST API integration skills.",
-    githubLink: "https://github.com/ZaddyAI/Nepflix",
-    externalLink: "",
-    tools: ["Flutter", "Dart", "TMDB"],
-    year: 2024,
-    madeAt: "Personal Project",
-    images: [],
-    details: [
-      "Nepflix is a Flutter-based movie and TV discovery app powered by the TMDB API, with a clean, intuitive interface for browsing entertainment content.",
-      "Core features include trending movies, critically acclaimed top-rated films, a curated collection of popular TV shows, and previews of upcoming releases to help users plan what to watch next.",
-      "Detailed descriptions for each title — including plot summaries, cast information, and genre tags — give users the information they need to make informed viewing decisions.",
-      "This project served as a foundational exercise in Flutter development and REST API integration, laying the groundwork for later, more complex projects like Streamly.",
-    ],
-  },
-  {
-    title: "MediServ",
-    slug: "mediserv",
-    description:
-      "A hackathon UI/UX prototype designed in Figma to help users locate medicines and find nearby medical centers. Built by a team of four at HSM IT Club Hackathon — won 2nd place in the UI/UX design category.",
-    githubLink: "",
-    externalLink:
-      "https://www.figma.com/proto/CsNZevREH3vFfB3oPn8pS0/MEDISERV?node-id=777-543&starting-point-node-id=777%3A543",
-    tools: ["Figma", "Canva"],
-    year: 2023,
-    madeAt: "Hackathon Project — 2nd Place UI/UX",
-    images: [],
-    details: [],
-  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
