@@ -108,9 +108,7 @@ _Dec 2023 – Feb 2026_ • Nepal
 | **LMS**                   | The Library Management System, developed using PHP and MySQL Workbench...     | PHP, MySQL Workbench, CSS     | 2024 |
 | **Nepflix**               | NepFlix is an engaging entertainment application built using Flutter...       | Flutter, Dart, TMDB           | 2024 |
 | **Flutter Tasks Tracker** | Flutter Tasks Tracker is a simple Flutter app that allows users to manage...  | Flutter, Dart, Sql            | 2024 |
-| **Mediserv**              | MediServ, a Hackathon project developed by a team of four, created a UI/UX... | Figma, Canva                  | 2023 |
 | **Personal Portfolio**    | Personal Portfolio Website                                                    | Next.Js, Tailwind             | 2024 |
-| **Maya Assistant**        | Maya Assistance is a virtual assistant inspired by Jarvis from Iron Man...    | Python, HTML, CSS, JavaScript | 2024 |
 
 ---
 
