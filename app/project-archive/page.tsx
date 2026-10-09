@@ -1,142 +1,222 @@
-"use client"
+import Image from "next/image";
+import Link from "next/link";
+import Reveal from "@/components/ui/Reveal";
+import { archive, projectCategory, projects, site } from "@/lib/constants";
 
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { motion } from "framer-motion"
-import Spotlight from "@/components/spotlight"
-import { projects } from "@/lib/constants"
-import { IconGitHub, IconExternal, IconPlayStore } from "@/components/icons"
+const ROW_SIZES = "(max-width: 768px) 40vw, 24vw";
 
-export default function ProjectArchive() {
-  const router = useRouter()
-  const sortedProjects = [...projects].sort((a, b) => b.year - a.year)
+type Row = { project: (typeof projects)[number]; number: string };
 
+/** The archive as a timeline: projects grouped under their year, the latest
+ *  year on top. Numbering runs continuously down the whole list, and the
+ *  order inside a year is the order they appear in `projects`. */
+const yearGroups: { year: number; rows: Row[] }[] = (() => {
+  const byYear = new Map<number, Row[]>();
+  [...projects]
+    .sort((a, b) => b.year - a.year)
+    .forEach((project, index) => {
+      const rows = byYear.get(project.year) ?? [];
+      rows.push({
+        project,
+        number: String(index + 1).padStart(2, "0"),
+      });
+      byYear.set(project.year, rows);
+    });
+  return [...byYear.entries()].map(([year, rows]) => ({ year, rows }));
+})();
+
+/**
+ * The archive index — a numbered editorial list rather than a card grid, so
+ * it reads as a contents page for the deeper documentation routes, sectioned
+ * by year with the newest work first.
+ *
+ * Every value is read straight from `projects`; nothing is duplicated here.
+ */
+export default function ArchiveIndexPage() {
   return (
-    <>
-      <Spotlight />
-      <div className="min-h-screen bg-background">
-        <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 md:px-12 md:py-20 lg:px-24 lg:py-0">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="pt-24 lg:pt-32 pb-16"
-          >
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-[#5eead4] hover:text-[#2dd4bf] transition-colors mb-6 group"
-            >
-              <span className="group-hover:-translate-x-1 transition-transform">←</span>
-              <span>Home</span>
-            </Link>
-            <h1 className="text-4xl font-bold tracking-tight text-[#e2e8f0] sm:text-5xl mb-4">
-              Project Archive
-            </h1>
-            <p className="text-[#94a3b8] max-w-xl">
-              A collection of projects I&apos;ve worked on, ranging from personal experiments to professional work.
-            </p>
-          </motion.div>
+    <div className="w-full overflow-hidden bg-obsidian font-display">
+      {/* ── Hero band, running behind the floating header ─────────────────── */}
+      <section className="grain relative overflow-hidden border-b border-line">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, rgba(9,9,11,0.94) 0%, rgba(9,9,11,0.72) 45%, rgba(9,9,11,0.99) 100%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="grid-bg absolute inset-0 opacity-25"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(80% 70% at 20% 110%, rgba(59,92,102,0.42) 0%, rgba(9,9,11,0) 62%)",
+          }}
+        />
 
-          <div className="space-y-4">
-            {sortedProjects.map((project, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                className="experience-card group block cursor-pointer"
-                onClick={() => router.push(`/projects/${project.slug}`)}
-              >
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <div className="sm:w-1/4 shrink-0">
-                    <div className="text-xs font-semibold uppercase tracking-wide text-[#64748b] mt-1 font-mono">
-                      {project.year}
-                    </div>
-                  </div>
-                  <div className="sm:w-3/4">
-                    <h3 className="font-medium text-[#e2e8f0] group-hover:text-[#5eead4] transition-colors duration-300 leading-tight flex items-center gap-2">
-                      {project.title}
-                      <IconExternal className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </h3>
-                    <p className="mt-2 text-sm text-[#94a3b8] leading-relaxed">
-                      {project.description}
-                    </p>
-                    <motion.ul
-                      className="mt-4 flex flex-wrap gap-2"
-                    >
-                      {project.tools.map((tool, i) => (
-                        <motion.li
-                          key={i}
-                          className="tool-tag"
-                        >
-                          {tool}
-                        </motion.li>
-                      ))}
-                    </motion.ul>
-                    <div className="mt-3 flex items-center gap-2 relative z-10">
-                      {project.githubLink && (
-                        <a
-                          href={project.githubLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
-                        >
-                          <IconGitHub className="w-5 h-5" />
-                        </a>
-                      )}
-                      {project.externalLink && (
-                        <a
-                          href={project.externalLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
-                        >
-                          <IconExternal className="w-5 h-5" />
-                        </a>
-                      )}
-                      {project.playstoreLink && (
-                        <a
-                          href={project.playstoreLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="relative p-2 rounded-md bg-[#1e293b] text-[#94a3b8] hover:text-[#5eead4] hover:bg-[#334155] transition-colors z-20"
-                        >
-                          <IconPlayStore className="w-5 h-5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.footer
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="mt-32 pb-8 text-center text-sm text-[#64748b]"
-          >
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="w-24 h-px bg-gradient-to-r from-transparent via-[#334155] to-transparent mx-auto mb-8"
-            />
-            <p className="mb-2">
-              Built by{" "}
-              <a href="https://gambhirpoudel.com.np" className="text-[#94a3b8] hover:text-[#5eead4] transition-colors" target="_blank" rel="noopener noreferrer">
-                Gambhir Poudel
-              </a>
+        <div className="shell relative pb-16 pt-24 sm:pt-28 md:pt-32 lg:pb-24 lg:pt-44">
+          <Reveal from="left">
+            <p className="flex items-center gap-4 text-[0.6875rem] font-semibold uppercase leading-[0.875rem] tracking-[0.12em] text-ice">
+              <span className="tabular-nums">{archive.head.index}</span>
+              <span aria-hidden="true" className="h-px w-10 bg-slate" />
+              <span className="text-muted">{archive.head.kicker}</span>
             </p>
-          </motion.footer>
+
+            <h1 className="t-display mt-6 text-stark">{archive.head.title}</h1>
+
+            <p className="mt-6 max-w-[72ch] text-[1rem] leading-[26px] text-muted lg:text-[1.125rem]">
+              {archive.lead}
+            </p>
+          </Reveal>
         </div>
-      </div>
-    </>
-  )
+      </section>
+
+      {/* ── Contents list — grouped by year, the latest year on top ───────── */}
+      <section className="shell py-16 lg:py-24">
+        {yearGroups.map((group) => (
+          <div key={group.year} className="mt-14 first:mt-0">
+            {/* Year heading — doubles as the top rule of its own list. */}
+            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2 border-b border-line pb-4">
+              <h2 className="text-[2rem] font-extrabold uppercase leading-none tracking-[0.02em] text-stark tabular-nums lg:text-[2.75rem]">
+                {group.year}
+              </h2>
+              <span aria-hidden="true" className="h-px w-8 bg-line-strong" />
+              <span className="text-[0.6875rem] font-semibold uppercase leading-[0.875rem] tracking-[0.12em] text-muted">
+                {group.rows.length}{" "}
+                {group.rows.length === 1 ? "project" : "projects"}
+              </span>
+            </div>
+
+            <ol>
+              {group.rows.map(({ project, number }, index) => {
+                const [cover] = project.images ?? [];
+                const category = projectCategory[project.slug] ?? "Project";
+                const detailHref = `${archive.href}/${project.slug}`;
+
+                return (
+                  <li key={project.slug} className="border-b border-line">
+                    <Reveal from="up" delay={index * 60}>
+                      <Link
+                        href={detailHref}
+                        className="group grid gap-4 py-6 sm:grid-cols-[3rem_10rem_minmax(0,1fr)] sm:gap-6 sm:py-7 md:grid-cols-[3.5rem_12rem_minmax(0,1fr)] md:gap-7 lg:grid-cols-[4.5rem_14rem_minmax(0,1fr)] lg:gap-9 lg:py-9"
+                      >
+                        {/* Index */}
+                        <span className="text-[0.6875rem] font-bold uppercase leading-[0.875rem] tracking-[0.12em] text-muted tabular-nums lg:pt-2">
+                          {number}
+                        </span>
+
+                        {/* Thumbnail */}
+                        <div className="relative aspect-[4/3] w-full overflow-hidden border border-line bg-elevated transition-colors duration-150 group-hover:border-stark sm:max-w-[14rem]">
+                          {cover ? (
+                            <Image
+                              src={cover}
+                              alt={`${project.title} preview`}
+                              fill
+                              sizes={ROW_SIZES}
+                              className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                            />
+                          ) : (
+                            <div className="hatch absolute inset-0" />
+                          )}
+                        </div>
+
+                        {/* Copy */}
+                        <div className="min-w-0">
+                          <p className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[0.6875rem] font-semibold uppercase leading-[0.875rem] tracking-[0.12em] text-ice">
+                            <span>{category}</span>
+                            <span
+                              aria-hidden="true"
+                              className="h-px w-6 bg-line-strong"
+                            />
+                            <span className="text-muted tabular-nums">
+                              {project.year}
+                            </span>
+                            <span
+                              aria-hidden="true"
+                              className="h-px w-6 bg-line-strong"
+                            />
+                            <span className="text-muted">{project.madeAt}</span>
+                          </p>
+
+                          <h3 className="mt-3 flex items-center gap-3 text-[1.75rem] font-extrabold uppercase leading-[1.1] tracking-[0.02em] text-stark transition-colors duration-150 group-hover:text-ice lg:text-[2.75rem] lg:leading-[1.05]">
+                            <span className="text-balance">{project.title}</span>
+                            <svg
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.25"
+                              strokeLinecap="square"
+                              aria-hidden="true"
+                              className="h-5 w-5 shrink-0 text-muted transition-transform duration-150 group-hover:translate-x-1.5 group-hover:text-ice lg:h-7 lg:w-7"
+                            >
+                              <path d="M4 12h15M13 6l6 6-6 6" />
+                            </svg>
+                          </h3>
+
+                          <p className="mt-3 max-w-[78ch] text-[0.875rem] leading-[22px] text-muted lg:text-[1rem] lg:leading-[26px]">
+                            {project.description}
+                          </p>
+
+                          <ul className="mt-4 flex flex-wrap gap-2">
+                            {(project.tools ?? []).map((tool) => (
+                              <li key={tool} className="tag">
+                                {tool}
+                              </li>
+                            ))}
+                          </ul>
+
+                          <p className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-muted">
+                            <span>
+                              {project.details?.length ?? 0}{" "}
+                              {archive.metaLabels.documentation}
+                            </span>
+                            <span
+                              aria-hidden="true"
+                              className="h-px w-6 bg-line-strong"
+                            />
+                            <span>
+                              {project.images?.length ?? 0}{" "}
+                              {archive.metaLabels.screens}
+                            </span>
+                          </p>
+                        </div>
+                      </Link>
+                    </Reveal>
+                  </li>
+                );
+              })}
+              <li aria-hidden="true" className="border-b border-line" />
+            </ol>
+          </div>
+        ))}
+
+        {/* Return path */}
+        <Reveal from="up" delay={120}>
+          <div className="mt-12 flex flex-wrap items-center gap-3">
+            <Link href="/#work" className="btn btn-ghost">
+              {archive.homeLabel}
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.25"
+                strokeLinecap="square"
+                aria-hidden="true"
+                className="h-[15px] w-[15px] lg:h-6 lg:w-6"
+              >
+                <path d="M4 12h15M13 6l6 6-6 6" />
+              </svg>
+            </Link>
+            <Link href="/#contact" className="btn btn-primary">
+              Work with {site.name.split(" ")[0]}
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+    </div>
+  );
 }
