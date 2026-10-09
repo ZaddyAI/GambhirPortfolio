@@ -4,7 +4,6 @@ import "./globals.css";
 import { site } from "@/lib/constants";
 import Splash from "@/components/ui/Splash";
 import { ToastProvider } from "@/components/ui/Toast";
-import { ensureAssets } from "@/lib/initAssets";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -90,11 +89,9 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  await ensureAssets();
-
   return (
     <html
       lang="en"

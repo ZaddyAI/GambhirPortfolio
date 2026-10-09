@@ -618,6 +618,28 @@
   animation: splash-bar 1.3s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
+@keyframes splash-fade {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  68% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.splash-overlay {
+  animation: splash-fade 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
 /* Soft cyan bloom used on accent dots and status markers. */
 .glare {
   box-shadow: 0 0 20px 0 rgba(59, 92, 102, 0.65);

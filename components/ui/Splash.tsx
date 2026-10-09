@@ -5,30 +5,28 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { site } from "@/lib/constants";
 
-/** How long the logo holds before the fade begins. */
-const HOLD_MS = 1400;
-/** Fade-out duration — must match the `transition-opacity` class below. */
-const FADE_MS = 500;
 const STORAGE_KEY = "has_site_loaded";
 
 /**
- * Opening splash: a full-viewport plate with the brand mark, a tracked
- * wordmark and a hairline progress sweep.
- *
- * Plays ONLY when the site itself loads for the first time in a session,
- * and never again during route navigation or page transitions.
- * Disappears entirely under prefers-reduced-motion.
+ * Opening splash: full-viewport plate with brand mark and sweep bar.
+ * Plays ONCE when the site first opens in a browser session.
+ * Built with self-terminating CSS animation so it can NEVER get stuck.
  */
 export default function Splash() {
   const pathname = usePathname();
-  const [phase, setPhase] = useState<"in" | "out" | "gone">("gone");
+  const [shouldRender, setShouldRender] = useState(false);
 
-  // Timed sequence: plays once per session on initial site load.
   useEffect(() => {
-    if (pathname === "/resume" || pathname?.includes(".pdf")) {
+    // Skip on document/resume paths
+    if (
+      pathname === "/resume" ||
+      pathname === "/resume/" ||
+      pathname?.includes(".pdf")
+    ) {
       return;
     }
 
+    // Check if session has already seen the splash
     try {
       if (sessionStorage.getItem(STORAGE_KEY)) {
         return;
@@ -38,40 +36,28 @@ export default function Splash() {
       // Storage restricted fallback
     }
 
+    // Skip on reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
 
-    setPhase("in");
+    setShouldRender(true);
 
-    const hold = window.setTimeout(() => setPhase("out"), HOLD_MS);
-    const gone = window.setTimeout(
-      () => setPhase("gone"),
-      HOLD_MS + FADE_MS + 80,
-    );
-    return () => {
-      window.clearTimeout(hold);
-      window.clearTimeout(gone);
-    };
-  }, [pathname]);
+    // Hard fallback timeout ensures unmount even if animation events are skipped
+    const timer = setTimeout(() => {
+      setShouldRender(false);
+    }, 1700);
 
-  // Hold the page still while the plate is up.
-  useEffect(() => {
-    if (phase === "gone" || pathname === "/resume" || pathname?.includes(".pdf")) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [phase, pathname]);
+    return () => clearTimeout(timer);
+  }, []);
 
-  if (phase === "gone" || pathname === "/resume" || pathname?.includes(".pdf")) return null;
+  if (!shouldRender) return null;
 
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[90] flex flex-col items-center justify-center bg-obsidian transition-opacity duration-500 ${phase === "out" ? "opacity-0" : "opacity-100"
-        }`}
+      onAnimationEnd={() => setShouldRender(false)}
+      className="splash-overlay pointer-events-none fixed inset-0 z-[90] flex flex-col items-center justify-center bg-obsidian select-none"
     >
       <div className="splash-logo flex flex-col items-center gap-5">
         <Image

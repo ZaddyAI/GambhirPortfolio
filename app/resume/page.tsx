@@ -56,7 +56,7 @@ export default function ResumePage() {
             ← Portfolio
           </Link>
           <a
-            href="/files/gambhir.pdf"
+            href="/gambhir.pdf"
             download="Gambhir_Poudel_CV.pdf"
             className="px-3 py-1 text-[0.625rem] sm:text-[0.6875rem] font-mono font-bold uppercase tracking-wider bg-ice text-obsidian hover:bg-white transition-colors"
           >
@@ -68,7 +68,7 @@ export default function ResumePage() {
       {/* PDF Viewport Frame */}
       <main className="flex-1 w-full h-full min-h-0 bg-[#525659] relative">
         <iframe
-          src="/files/gambhir.pdf#zoom=100&toolbar=1"
+          src="/gambhir.pdf#zoom=100&toolbar=1"
           title={`${site.name} Resume`}
           className="w-full h-full border-0 block"
         />
@@ -78,7 +78,7 @@ export default function ResumePage() {
               PDF preview requires a browser with PDF viewer support.
             </p>
             <a
-              href="/files/gambhir.pdf"
+              href="/gambhir.pdf"
               download
               className="px-4 py-2 font-mono uppercase tracking-wider bg-ice text-obsidian font-bold"
             >
