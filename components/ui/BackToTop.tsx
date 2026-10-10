@@ -34,14 +34,14 @@ export default function BackToTop() {
            the frame follows the tilt. */
         "group fixed bottom-4 right-4 z-30 flex h-12 w-12 flex-col items-center justify-center gap-1 p-px sm:bottom-5 sm:right-5 sm:h-14 sm:w-14",
         "bg-line-strong transition-colors duration-150 group-hover:bg-stark",
-        "chamfer-tr chamfer-bl",
+        "chamfer-tr chamfer-bl chamfer-tight",
       )}
     >
       <span
         className={cn(
           "flex h-full w-full flex-col items-center justify-center gap-1",
           "bg-elevated backdrop-blur-sm transition-colors duration-150 group-hover:bg-panel",
-          "chamfer-tr chamfer-bl",
+          "chamfer-tr chamfer-bl chamfer-tight",
         )}
       >
         <svg

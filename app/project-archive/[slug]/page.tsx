@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/ui/Reveal";
+import MatrixGrid from "@/components/ui/MatrixGrid";
 import ProjectGallery from "@/components/ui/ProjectGallery";
 import {
   ProjectAvailabilityWatcher,
@@ -359,21 +360,11 @@ export default async function ProjectDetailPage({ params }: Props) {
             <section id="stack" className="mt-16 scroll-mt-32 lg:mt-24">
               <Reveal from="up">
                 <SectionMark {...archive.sections.stack} />
-                <ul className="mt-8 grid grid-cols-2 border-b border-r border-line sm:grid-cols-3 xl:grid-cols-4">
-                  {(project.tools ?? []).map((tool, toolIndex) => (
-                    <li
-                      key={tool}
-                      className="flex flex-col justify-between gap-6 border-t border-l border-line bg-obsidian p-4 transition-colors duration-150 hover:bg-panel lg:p-5"
-                    >
-                      <span className="text-[0.6875rem] font-semibold tracking-[0.12em] text-muted tabular-nums">
-                        {String(toolIndex + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-[0.9375rem] font-bold uppercase leading-[1.125rem] tracking-[0.02em] text-stark lg:text-[1.0625rem]">
-                        {tool}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+                <MatrixGrid
+                  items={project.tools ?? []}
+                  className="mt-8 border-line"
+                  cellClassName="border-line bg-obsidian hover:bg-panel"
+                />
               </Reveal>
             </section>
 

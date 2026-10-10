@@ -3,10 +3,10 @@ import type { BlogPost } from "../types";
 /**
  * The full write-up behind Sajilo Khata's automatic transaction logging.
  *
- * This is the reference post for the typed-body shape: it mixes prose,
- * headings, code (with filenames), lists, callouts and — if you add one —
- * inline screenshots. Create a new file like this for each post, then add it
- * to `posts` in `lib/constants.ts`.
+ * Rewritten to match the Sajilo-Khata repository README (packages, banks,
+ * layers, sync flow). The code samples are SIMPLIFIED illustrations of the
+ * approach, not copies of lib/core/services/sms_service.dart — swap in the
+ * real code (trimmed) where you can.
  *
  * Items marked TODO are notes for Gambhir — replace them with the real
  * story before publishing.
@@ -15,21 +15,21 @@ export const smsParsingPost: BlogPost = {
   slug: "reading-bank-sms-in-flutter",
   title: "How I read bank SMS in Flutter to auto-log transactions",
   category: "Tutorial",
-  tags: ["flutter", "android", "sms", "bloc", "hive", "firestore"],
+  tags: ["flutter", "android", "sms", "bloc", "hive", "firestore", "clean-architecture"],
   date: "2026-06-14",
   image: "/images/sajilo-khata/sms-tracking.png",
   alt: "Sajilo Khata SMS tracking screen",
   excerpt:
-    "Permissions, a background listener, a parser per bank, de-duplication and the Google Play policy question — the full pipeline behind Sajilo Khata's automatic transaction logging.",
+    "Permissions, per-bank parsers, duplicate checks, Hive-first storage and the Google Play SMS declaration — how Sajilo Khata turns bank SMS into ledger entries.",
   body: [
     {
       type: "p",
-      text: "When I started Sajilo Khata, the one feature I refused to cut was automatic logging. Nobody keeps a manual expense diary for long, but every bank already sends an SMS for each transaction. This post walks through the pipeline that turns those messages into ledger entries: permissions, a listener, parsing, de-duplication and storage.",
+      text: "When I started Sajilo Khata, I noticed that no Nepali expense tracker parsed bank SMS automatically. Yet every bank already texts you after each transaction. If the app could read those messages, nobody would have to type anything. This post walks through how that works: permissions, sender filtering, parsing, duplicate checks, and the offline-first storage behind it.",
     },
     {
       type: "callout",
       tone: "note",
-      text: "This covers Android only. iOS does not let apps read the SMS inbox, so any SMS-based approach is Android-specific.",
+      text: "Automatic reading is Android-only, because iOS does not let apps read the SMS inbox. On iOS (and for messages the app doesn't recognise) Sajilo Khata falls back to a paste box: you paste the SMS text and the same parser logs it.",
     },
 
     { type: "h2", text: "The pipeline at a glance" },
@@ -37,201 +37,246 @@ export const smsParsingPost: BlogPost = {
       type: "list",
       ordered: true,
       items: [
-        "Ask for the SMS permission at the moment the user enables auto-tracking, not on first launch.",
-        "Listen for incoming messages, including when the app is closed.",
-        "Ignore anything not sent by a known bank sender ID.",
-        "Hand the message to the parser registered for that bank.",
-        "De-duplicate, then save locally and sync to Firestore.",
+        "Request the SMS permission at runtime.",
+        "Read incoming messages, but only from the senders the user chose to track.",
+        "Match the sender to a bank and run that bank's parser.",
+        "Silently drop anything the parser doesn't recognise.",
+        "Check the transaction isn't a duplicate, then auto-import it.",
+        "Categorise it, cache it in Hive, sync it to Firestore, and notify the user.",
       ],
     },
+    {
+      type: "image",
+      src: "/images/sajilo-khata/sms-tracking.png",
+      alt: "Sajilo Khata SMS auto-track settings screen",
+      caption: "The SMS auto-track screen: a master toggle plus a per-sender filter.",
+    },
 
-    { type: "h2", text: "1. Permissions and the listener" },
+    { type: "h2", text: "What the messages actually look like" },
     {
       type: "p",
-      text: "I use the another_telephony package, which wraps Android's SMS APIs. The important detail is the background handler: it must be a top-level function annotated so it survives tree shaking, because Android may start your app's isolate just to deliver a message.",
+      text: "Before writing any code, I collected real messages from each bank. They share almost nothing in structure, which shaped the whole design. Here are abridged samples with account numbers masked:",
+    },
+    {
+      type: "code",
+      language: "text",
+      filename: "sample-messages.txt",
+      code: `NIMB:      AC#XXX Dr by NPR 2500 on 01Dec25
+NIMB:      AC#XXX Cr by NPR 1600
+NIC Asia:  Your #XXXXXX has been Credited by NPR 1,013.45 on 14/04/2026
+ADB:       NPR 15,000.00 deposited on 25/03/2026
+Nabil:     deposited by NPR 1,500.00 on 06/04/2026`,
+    },
+    {
+      type: "p",
+      text: "Three things stand out. First, the vocabulary for direction differs: NIMB says Dr/Cr, NIC Asia and Laxmi Sunrise say Credited/Debited, ADB and Nabil say deposited/withdrawn. Second, amounts use thousands separators and sometimes decimals. Third, even the dates disagree (01Dec25, 14/04/2026, 17/04/26), which is a good reason not to trust a date parsed from the message body.",
+    },
+
+    { type: "h2", text: "1. Permissions" },
+    {
+      type: "p",
+      text: "The app uses the android_sms_reader package to read messages and permission_handler to ask for access. The manifest declares both SMS permissions:",
+    },
+    {
+      type: "code",
+      language: "xml",
+      filename: "android/app/src/main/AndroidManifest.xml",
+      code: `<uses-permission android:name="android.permission.READ_SMS"/>
+<uses-permission android:name="android.permission.RECEIVE_SMS"/>`,
     },
     {
       type: "code",
       language: "dart",
-      filename: "sms_listener.dart",
-      code: `import 'package:another_telephony/telephony.dart';
+      filename: "sms_permission.dart",
+      code: `import 'package:permission_handler/permission_handler.dart';
 
-final Telephony telephony = Telephony.instance;
-
-@pragma('vm:entry-point')
-void backgroundSmsHandler(SmsMessage message) {
-  // Runs in a separate isolate. Keep it small: parse and persist only.
-  SmsPipeline.handle(message);
-}
-
-Future<bool> startSmsTracking() async {
-  final granted = await telephony.requestPhoneAndSmsPermissions ?? false;
-  if (!granted) return false;
-
-  telephony.listenIncomingSms(
-    onNewMessage: SmsPipeline.handle,
-    onBackgroundMessage: backgroundSmsHandler,
-  );
-  return true;
+Future<void> requestSmsPermission() async {
+  await Permission.sms.request();
 }`,
     },
     {
-      type: "p",
-      text: "Because the background handler runs in its own isolate, it cannot touch your BLoC instances or any in-memory state. It has to write straight to local storage (Hive in my case), and the UI picks the change up when the app next opens.",
+      type: "callout",
+      tone: "note",
+      text: "TODO (Gambhir): say where in the flow you ask (first launch? when the user flips the auto-track toggle?) and what the app does if the user denies or permanently denies the permission.",
     },
 
     { type: "h2", text: "2. One parser per bank" },
     {
       type: "p",
-      text: "Every bank words its messages differently, so a single giant regex becomes unmaintainable fast. Instead, each bank gets its own small parser behind a shared interface, and a registry picks the right one from the sender ID.",
-    },
-    {
-      type: "code",
-      language: "dart",
-      filename: "bank_parser.dart",
-      code: `enum TxType { credit, debit }
-
-class ParsedTransaction {
-  final TxType type;
-  final double amount;
-  final String bank;
-  final DateTime receivedAt;
-  final String rawBody;
-
-  const ParsedTransaction({
-    required this.type,
-    required this.amount,
-    required this.bank,
-    required this.receivedAt,
-    required this.rawBody,
-  });
-}
-
-abstract class BankParser {
-  String get bankName;
-  Set<String> get senderIds; // e.g. the alphanumeric sender the bank uses
-  ParsedTransaction? parse(String body, DateTime receivedAt);
-}
-
-class ParserRegistry {
-  final List<BankParser> _parsers;
-  const ParserRegistry(this._parsers);
-
-  BankParser? forSender(String? sender) {
-    if (sender == null) return null;
-    for (final p in _parsers) {
-      if (p.senderIds.contains(sender.toUpperCase())) return p;
-    }
-    return null; // unknown sender: ignore the message entirely
-  }
-}`,
+      text: "The parser follows four rules: check the sender against known bank identifiers, look for debit/credit keywords, extract the NPR amount, and return either a result or null. Returning null for anything unfamiliar is deliberate. Banks also send OTPs, balance alerts and promotions, and a parser that guesses would log garbage. Missing an odd message is better than recording a wrong amount.",
     },
     {
       type: "p",
-      text: "Here is the shape of one bank's parser. The pattern below is an illustration, not a real bank's format; yours will match the exact wording of the messages you collected.",
+      text: "Here is a simplified version of that idea. Each bank is just configuration: its sender IDs and the words it uses for credit and debit.",
     },
     {
       type: "code",
       language: "dart",
-      filename: "example_bank_parser.dart",
-      code: `class ExampleBankParser implements BankParser {
-  @override
-  String get bankName => 'Example Bank';
+      filename: "bank_parser.dart (simplified)",
+      code: `enum TxType { debit, credit }
 
-  @override
-  Set<String> get senderIds => {'EXAMPLEBANK'};
+class ParsedSms {
+  final double amount;
+  final TxType type;
+  final String bank;
+  const ParsedSms({required this.amount, required this.type, required this.bank});
+}
 
-  // Illustrative only: matches "debited by NPR 1,500.00" style text.
+class BankParser {
+  final String bank;
+  final Set<String> senders;
+  final RegExp creditWords;
+  final RegExp debitWords;
+
+  const BankParser({
+    required this.bank,
+    required this.senders,
+    required this.creditWords,
+    required this.debitWords,
+  });
+
+  // Matches "NPR 1,013.45", "NPR 2500", "Rs. 120.00"
   static final _amount = RegExp(
-    r'(credited|debited).*?(?:NPR|Rs\\.?)\\s*([\\d,]+(?:\\.\\d{1,2})?)',
+    r'(?:NPR|Rs\\.?)\\s*([\\d,]+(?:\\.\\d{1,2})?)',
     caseSensitive: false,
   );
 
-  @override
-  ParsedTransaction? parse(String body, DateTime receivedAt) {
+  ParsedSms? parse(String sender, String body) {
+    if (!senders.contains(sender.toUpperCase())) return null;
+
+    final isCredit = creditWords.hasMatch(body);
+    final isDebit = debitWords.hasMatch(body);
+    if (isCredit == isDebit) return null; // neither, or both: don't guess
+
     final m = _amount.firstMatch(body);
-    if (m == null) return null; // not a transaction message (OTP, promo...)
+    if (m == null) return null;
 
-    final type = m.group(1)!.toLowerCase() == 'credited'
-        ? TxType.credit
-        : TxType.debit;
-    final amount = double.parse(m.group(2)!.replaceAll(',', ''));
-
-    return ParsedTransaction(
-      type: type,
-      amount: amount,
-      bank: bankName,
-      receivedAt: receivedAt,
-      rawBody: body,
+    return ParsedSms(
+      amount: double.parse(m.group(1)!.replaceAll(',', '')),
+      type: isCredit ? TxType.credit : TxType.debit,
+      bank: bank,
     );
+  }
+}
+
+final parsers = [
+  BankParser(
+    bank: 'NIMB',
+    senders: {'NIMB'}, // sender ID as it appears in the inbox
+    creditWords: RegExp(r'\\bcr\\b', caseSensitive: false),
+    debitWords: RegExp(r'\\bdr\\b', caseSensitive: false),
+  ),
+  BankParser(
+    bank: 'NIC Asia',
+    senders: {'NICASIA'},
+    creditWords: RegExp(r'\\bcredited\\b', caseSensitive: false),
+    debitWords: RegExp(r'\\bdebited\\b', caseSensitive: false),
+  ),
+  BankParser(
+    bank: 'Nabil',
+    senders: {'NABIL'},
+    creditWords: RegExp(r'\\bdeposited\\b', caseSensitive: false),
+    debitWords: RegExp(r'\\bwithdrawn\\b', caseSensitive: false),
+  ),
+];`,
+    },
+    {
+      type: "callout",
+      tone: "warning",
+      text: "Match direction words as whole words. A plain substring check for \"dr\" also matches \"address\", and \"cr\" matches \"credit card\" or \"scratch\". The \\b word boundaries in the regexes above avoid that class of false positive.",
+    },
+    {
+      type: "callout",
+      tone: "note",
+      text: "TODO (Gambhir): replace the example sender IDs and the simplified class with a trimmed version of your real parsers, and add what surprised you: a bank that changed its wording, reversals, balance-only messages, or messages with two amounts.",
+    },
+
+    { type: "h2", text: "3. Not logging the same message twice" },
+    {
+      type: "p",
+      text: "Any time you read the inbox more than once (after toggling auto-track off and on, after a reinstall, or when a live message and a re-scan overlap) the same transaction can show up twice. In Sajilo Khata this check lives in sms_service.dart, alongside parsing and auto-import, and runs before anything is saved.",
+    },
+    {
+      type: "callout",
+      tone: "note",
+      text: "TODO (Gambhir): explain exactly how your duplicate check works (which fields you compare: amount, type, bank, timestamp?) and what edge case it can't handle, such as two genuine identical transactions in the same minute.",
+    },
+
+    { type: "h2", text: "4. After a message parses" },
+    {
+      type: "p",
+      text: "A parsed message becomes a normal Transaction with source set to sms. It carries the amount, debit/credit type, bank, and both a Gregorian date and a Bikram Sambat date generated by my own nepali_calendar_kit package. Because users can edit any field, a wrongly parsed message is easy to correct, and manual and SMS transactions live in the same ledger.",
+    },
+    {
+      type: "list",
+      items: [
+        "Auto-categorisation: a Categorizer utility maps keywords in the note or bank name to a category (Bhatbhateni to Food, Pathao to Transport), and the list grows with real use.",
+        "Goal prompt: when a credit SMS arrives, the app asks \"Add to a goal?\" so savings can be contributed in one tap.",
+        "Notification: a push notification tells the user that a transaction was auto-logged.",
+      ],
+    },
+
+    { type: "h2", text: "5. Offline-first storage and sync" },
+    {
+      type: "p",
+      text: "Everything goes through a repository layer. Writes land in the Hive cache first, so the app works without internet. A custom SyncService watches connectivity (connectivity_plus) and pushes pending data to Firestore when the connection returns, while Firestore streams update the UI in real time.",
+    },
+    {
+      type: "code",
+      language: "text",
+      filename: "data-flow.txt",
+      code: `User Action -> BLoC -> UseCase -> Repository -> Local Cache (Hive)
+                                               | (if online)
+                                           Remote (Firestore)
+                                               |
+                                       Stream updates UI`,
+    },
+    {
+      type: "p",
+      text: "Data lives under users/{uid}/transactions, and one security rule scopes everything to its owner:",
+    },
+    {
+      type: "code",
+      language: "text",
+      filename: "firestore.rules",
+      code: `rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId}/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
   }
 }`,
     },
     {
-      type: "p",
-      text: "Returning null for anything that does not match is deliberate. Banks also send OTPs, balance alerts and promotions from the same sender ID, and a parser that guesses will log garbage. It is better to miss an odd message than to record a wrong amount.",
-    },
-    {
       type: "callout",
       tone: "note",
-      text: "TODO (Gambhir): add what you actually learned here. Which formats surprised you? Did any bank change its wording? How do you handle balance-only messages or reversals?",
-    },
-
-    { type: "h2", text: "3. De-duplication" },
-    {
-      type: "p",
-      text: "The same message can reach you twice: once through the foreground listener and once through the background one, or again when you re-scan the inbox after a reinstall. Without protection, the user sees double entries.",
-    },
-    {
-      type: "code",
-      language: "dart",
-      filename: "dedupe.dart",
-      code: `import 'dart:convert';
-import 'package:crypto/crypto.dart';
-
-String fingerprint(String sender, DateTime receivedAt, String body) {
-  final input = '$sender|\${receivedAt.millisecondsSinceEpoch}|$body';
-  return sha1.convert(utf8.encode(input)).toString();
-}
-
-// Use the fingerprint as the Hive key. put() on an existing key is a no-op
-// for our purposes, so the second copy of a message never creates a duplicate.`,
-    },
-
-    { type: "h2", text: "4. Offline-first storage" },
-    {
-      type: "p",
-      text: "Parsed transactions go into Hive first, keyed by the fingerprint, then sync to Firestore when a connection is available. Since the fingerprint is also the Firestore document ID, retrying a sync is safe: the same transaction can never be written twice.",
-    },
-    {
-      type: "callout",
-      tone: "note",
-      text: "TODO (Gambhir): describe your sync queue and conflict handling in two or three paragraphs, e.g. what happens if the user edits a transaction offline on two devices.",
+      text: "TODO (Gambhir): add two or three paragraphs on conflicts: what happens if the same transaction is edited offline on two devices, and what 'syncs pending data' means in your SyncService.",
     },
 
     { type: "h2", text: "The Google Play question" },
     {
       type: "p",
-      text: "Google Play restricts the READ_SMS and RECEIVE_SMS permissions. Apps generally need to be the default SMS handler, or qualify for a listed exception and submit a Permissions Declaration Form explaining the core functionality that needs SMS access. Policies change, so read the current Play Console policy text before you build around this, and plan for the possibility that a review rejects the declaration.",
+      text: "Google Play restricts the READ_SMS and RECEIVE_SMS permissions. Apps generally need to be the default SMS handler, or qualify for a listed exception and submit a declaration explaining the core functionality that needs SMS access. You also need a privacy policy URL. In my own notes I budgeted 3 to 7 business days for review. Policies change, so read the current Play Console policy text before you build around this, and plan for the possibility that a declaration is rejected.",
     },
     {
       type: "callout",
       tone: "warning",
-      text: "TODO (Gambhir): tell readers what actually happened with Sajilo Khata: did you submit a declaration, what did you write, and what was the outcome? This is the most valuable part of the post, because almost nobody documents it honestly.",
+      text: "TODO (Gambhir): tell readers what actually happened: what you wrote in the declaration, whether it was approved first time, how long it really took, and what you would change. This is the most valuable part of the post.",
     },
 
     { type: "h2", text: "What I would do differently" },
     {
       type: "list",
       items: [
-        "TODO: one real lesson from building this (for example, writing parser tests from real message samples on day one).",
-        "TODO: one thing that broke in production.",
-        "TODO: what you plan to improve next.",
+        "Finish the architecture migration. The rest of the app follows Clean Architecture with BLoC, but the SMS service still leans on the older FirebaseService and TransactionModel. I would move it onto the repository layer so SMS-logged and manual transactions take the same path.",
+        "TODO: write parser tests from real message samples on day one, so a bank changing its wording shows up as a failing test instead of a missing transaction.",
+        "TODO: one thing that broke in production, and what you plan to improve next.",
       ],
     },
     {
       type: "p",
-      text: "If you are building something similar for another country's banks, the structure carries over unchanged: only the sender IDs and the parsers differ. The source for Sajilo Khata is on GitHub if you want to see it in context.",
+      text: "If you are building something similar for another country's banks, the structure carries over: only the sender IDs and the parser configuration change. The full source is on GitHub if you want to see it in context.",
     },
   ],
   link: {

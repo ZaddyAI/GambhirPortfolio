@@ -3,11 +3,17 @@ import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import { blogPostHref, blogPosts, blogRoute, blogSection, formatPostDate, postReadMinutes, site } from "@/lib/constants";
 
-const CARD_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 40vw";
+const CARD_SIZES = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw";
 
 /**
  * The blog index — an editorial card grid rather than the archive's numbered
  * contents list, because posts are browsed by headline rather than scanned.
+ *
+ * Cards sit 3-up from `lg` with a shallow 16/9 plate and clamped standfirst,
+ * so the grid reads as a contact sheet instead of a run of posters. The
+ * chamfered corners are the site's cut-corner geometry: the outline is painted
+ * by a 1px outer shell (`bg-line`) rather than a `border`, because `clip-path`
+ * would slice a plain border off at the cut.
  *
  * Every value is read straight from `blogPosts`; nothing is duplicated here,
  * so a new post in `lib/constants.ts` shows up with no edits to this file.
@@ -57,84 +63,89 @@ export default function BlogIndexPage() {
 
       {/* ── Post grid ────────────────────────────────────────────────────── */}
       <section className="shell py-16 lg:py-24">
-        <div className="grid gap-6 sm:grid-cols-2 lg:gap-8">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {blogPosts.map((post, index) => (
             <Reveal key={post.slug} from="up" delay={index * 60}>
               <Link
                 href={blogPostHref(post.slug)}
-                className="group flex h-full flex-col border border-line bg-elevated transition-colors duration-150 hover:border-stark"
+                /* Outer shell = the outline. 1px of `bg-line` shows through
+                   around the surface, so the frame follows the cut corners —
+                   a `border` here would be clipped away by the chamfer. */
+                className="group flex h-full flex-col bg-line p-px transition-colors duration-150 hover:bg-stark chamfer-diag"
               >
-                {/* Artwork */}
-                <div className="relative aspect-[16/10] w-full overflow-hidden border-b border-line bg-panel">
-                  {post.image ? (
-                    <Image
-                      src={post.image}
-                      alt={post.alt ?? post.title}
-                      fill
-                      sizes={CARD_SIZES}
-                      className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="hatch absolute inset-0" />
-                  )}
-                </div>
+                <span className="flex flex-1 flex-col bg-elevated chamfer-diag">
+                  {/* Artwork */}
+                  <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-line bg-panel">
+                    {post.image ? (
+                      <Image
+                        src={post.image}
+                        alt={post.alt ?? post.title}
+                        fill
+                        sizes={CARD_SIZES}
+                        className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="hatch absolute inset-0" />
+                    )}
+                  </div>
 
-                {/* Copy */}
-                <div className="flex flex-1 flex-col p-5 lg:p-6">
-                  <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.6875rem] font-semibold uppercase leading-[0.875rem] tracking-[0.12em] text-ice">
-                    <span>{post.category}</span>
-                    <span
-                      aria-hidden="true"
-                      className="h-px w-6 bg-line-strong"
-                    />
-                    <span className="text-muted tabular-nums">
-                      {formatPostDate(post.date)}
-                    </span>
-                    <span
-                      aria-hidden="true"
-                      className="h-px w-6 bg-line-strong"
-                    />
-                    <span className="text-muted tabular-nums">
-                      {postReadMinutes(post)} min read
-                    </span>
-                  </p>
-
-                  <h2 className="mt-3 text-balance text-[1.375rem] font-extrabold uppercase leading-[1.15] tracking-[0.02em] text-stark transition-colors duration-150 group-hover:text-ice lg:text-[1.75rem]">
-                    {post.title}
-                  </h2>
-
-                  {post.excerpt ? (
-                    <p className="mt-3 text-[0.9375rem] leading-[26px] text-muted lg:text-[1rem]">
-                      {post.excerpt}
-                    </p>
-                  ) : null}
-
-                  {post.metric ? (
-                    <p className="mt-4 flex items-baseline gap-2">
-                      <span className="font-display text-[1.25rem] font-bold uppercase leading-none tracking-[0.02em] text-ice">
-                        {post.metric}
+                  {/* Copy */}
+                  <div className="flex flex-1 flex-col p-4 lg:p-5">
+                    <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.625rem] font-semibold uppercase leading-[0.875rem] tracking-[0.12em] text-ice">
+                      <span>{post.category}</span>
+                      <span
+                        aria-hidden="true"
+                        className="h-px w-6 bg-line-strong"
+                      />
+                      <span className="text-muted tabular-nums">
+                        {formatPostDate(post.date)}
                       </span>
-                      <span className="text-[0.75rem] leading-[18px] text-muted">
-                        {post.metricLabel}
+                      <span
+                        aria-hidden="true"
+                        className="h-px w-6 bg-line-strong"
+                      />
+                      <span className="text-muted tabular-nums">
+                        {postReadMinutes(post)} min read
                       </span>
                     </p>
-                  ) : null}
 
-                  <span className="mt-6 flex items-center gap-3 pt-1 text-[0.6875rem] font-bold uppercase leading-[0.875rem] tracking-[0.14em] text-stark">
-                    {blogRoute.readLabel}
-                    <svg
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.25"
-                      strokeLinecap="square"
-                      aria-hidden="true"
-                      className="h-4 w-4 shrink-0 text-muted transition-transform duration-150 group-hover:translate-x-1.5 group-hover:text-ice"
-                    >
-                      <path d="M4 12h15M13 6l6 6-6 6" />
-                    </svg>
-                  </span>
-                </div>
+                    <h2 className="mt-3 text-balance text-[1.125rem] font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-stark transition-colors duration-150 group-hover:text-ice lg:text-[1.3125rem]">
+                      {post.title}
+                    </h2>
+
+                    {post.excerpt ? (
+                      <p className="mt-3 line-clamp-3 text-[0.875rem] leading-[24px] text-muted lg:text-[0.9375rem]">
+                        {post.excerpt}
+                      </p>
+                    ) : null}
+
+                    {post.metric ? (
+                      <p className="mt-4 flex items-baseline gap-2">
+                        <span className="font-display text-[1.0625rem] font-bold uppercase leading-none tracking-[0.02em] text-ice">
+                          {post.metric}
+                        </span>
+                        <span className="text-[0.6875rem] leading-[18px] text-muted">
+                          {post.metricLabel}
+                        </span>
+                      </p>
+                    ) : null}
+
+                    <span className="mt-auto flex items-center gap-3 pt-5 text-[0.625rem] font-bold uppercase leading-[0.875rem] tracking-[0.14em] text-stark">
+                      {blogRoute.readLabel}
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.25"
+                        strokeLinecap="square"
+                        aria-hidden="true"
+                        className="h-4 w-4 shrink-0 text-muted transition-transform duration-150 group-hover:translate-x-1.5 group-hover:text-ice"
+                      >
+                        <path d="M4 12h15M13 6l6 6-6 6" />
+                      </svg>
+                    </span>
+                  </div>
+                </span>
               </Link>
             </Reveal>
           ))}

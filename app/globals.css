@@ -570,6 +570,56 @@
   }
 }
 
+/* Both cut corners on the SAME element. `clip-path` is a single property, so
+   `.chamfer-tr` + `.chamfer-bl` stacked together never combine — the later
+   rule silently wins and only one corner is cut. The diagonal pair ships as
+   its own clip for that reason: top-right + bottom-left, one polygon. */
+.chamfer-diag {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 20px) 0,
+    100% 20px,
+    100% 100%,
+    20px 100%,
+    0 calc(100% - 20px)
+  );
+}
+
+@media (min-width: 1024px) {
+  .chamfer-diag {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 28px) 0,
+      100% 28px,
+      100% 100%,
+      28px 100%,
+      0 calc(100% - 28px)
+    );
+  }
+}
+
+/* `chamfer-tight` — the same cut at a fraction of the size, for small HUD
+   chips (back-to-top, icon buttons). On a 48–56px box the standard 20/28px
+   corner eats nearly half the edge and the label reads as if it were tilted.
+   Higher specificity than the plain classes, so it wins at every breakpoint. */
+.chamfer-tr.chamfer-tight {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.chamfer-bl.chamfer-tight {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+@media (min-width: 1024px) {
+  .chamfer-tr.chamfer-tight {
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
+  }
+
+  .chamfer-bl.chamfer-tight {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  }
+}
+
 /* Toast chips rise into place from below the viewport edge. */
 @keyframes toast-in {
   from {

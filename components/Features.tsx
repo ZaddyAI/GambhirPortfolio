@@ -1,4 +1,5 @@
 import Image from "next/image";
+import MatrixGrid from "./ui/MatrixGrid";
 import ParallaxImage from "./ui/ParallaxImage";
 import Reveal from "./ui/Reveal";
 import SectionHead from "./ui/SectionHead";
@@ -97,23 +98,14 @@ function MatrixFeature({ feature }: { feature: typeof features[1] }) {
                 background grid: Chromium paints the first 1px row-gap under
                 the cells, so the rule between rows 1 and 2 silently vanished.
                 Cell borders can't be eaten that way, and every rule stays
-                exactly 1px. The container carries the bottom + right frame so
-                the empty tracks after the last item stay outlined. */}
-            <ul className="grid grid-cols-2 border-b border-r border-line-strong sm:grid-cols-3 xl:grid-cols-4">
-              {feature.items.map((item, index) => (
-                <li
-                  key={item}
-                  className="group flex flex-col justify-between gap-6 border-t border-l border-line-strong bg-obsidian/92 p-4 backdrop-blur-sm transition-colors duration-150 hover:bg-panel lg:p-5"
-                >
-                  <span className="text-[0.6875rem] font-semibold tracking-[0.12em] text-muted tabular-nums">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[0.9375rem] font-bold uppercase leading-[1.125rem] tracking-[0.02em] text-stark transition-colors duration-150 group-hover:text-ice lg:text-[1.0625rem]">
-                    {item}
-                  </span>
-                </li>
-              ))}
-            </ul>
+                exactly 1px. The container carries the bottom + right frame.
+                MatrixGrid pads the trailing row so its rules still span the
+                full width when 17 items don't divide by 2, 3 or 4 columns. */}
+            <MatrixGrid
+              items={feature.items}
+              className="border-line-strong"
+              cellClassName="border-line-strong bg-obsidian/92 backdrop-blur-sm hover:bg-panel"
+            />
           </Reveal>
         </div>
       </div>

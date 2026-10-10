@@ -121,7 +121,7 @@ export default function Rail() {
           priority
           className="h-9 w-9 object-contain"
         />
-        <span className="-mt-0.5 block text-center font-display text-[0.75rem] font-bold uppercase leading-[1.25rem] tracking-[0.16em] text-stark">
+        <span className="-mt-0.5 block whitespace-nowrap text-center font-display text-[0.6875rem] font-bold uppercase leading-[1.25rem] tracking-[0.06em] text-stark">
           {site.monogram}
         </span>
         <span className="-mt-1 block text-center font-display text-[0.5rem] font-medium uppercase leading-[1rem] tracking-[0.3em] text-muted">

@@ -134,7 +134,7 @@ export default function SiteFooter() {
             © {year} {site.name}. {footerCopy.legal}
           </p>
           <p className="text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-obsidian/55 lg:text-[0.875rem]">
-            Built by {site.name}
+            Designed and developed by <Link href="/">{site.name}</Link>
           </p>
         </div>
       </div>
