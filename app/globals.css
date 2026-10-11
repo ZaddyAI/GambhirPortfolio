@@ -39,6 +39,8 @@
   /* secondary         — accent          */
   --color-ice-bright: #c5e8f4;
   /* secondary-fixed    — accent hover   */
+  --color-mint: #2dd4bf;
+  /* success           — confirmed / ACK */
 
   /* --- inverted (footer / plates) ------------------------------------- */
   --color-ivory: #e5e1e4;
@@ -575,26 +577,22 @@
    rule silently wins and only one corner is cut. The diagonal pair ships as
    its own clip for that reason: top-right + bottom-left, one polygon. */
 .chamfer-diag {
-  clip-path: polygon(
-    0 0,
-    calc(100% - 20px) 0,
-    100% 20px,
-    100% 100%,
-    20px 100%,
-    0 calc(100% - 20px)
-  );
+  clip-path: polygon(0 0,
+      calc(100% - 20px) 0,
+      100% 20px,
+      100% 100%,
+      20px 100%,
+      0 calc(100% - 20px));
 }
 
 @media (min-width: 1024px) {
   .chamfer-diag {
-    clip-path: polygon(
-      0 0,
-      calc(100% - 28px) 0,
-      100% 28px,
-      100% 100%,
-      28px 100%,
-      0 calc(100% - 28px)
-    );
+    clip-path: polygon(0 0,
+        calc(100% - 28px) 0,
+        100% 28px,
+        100% 100%,
+        28px 100%,
+        0 calc(100% - 28px));
   }
 }
 
@@ -637,57 +635,10 @@
   animation: toast-in 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Splash screen — the mark settles in, then the hairline sweeps across. */
-@keyframes splash-logo {
-  from {
-    opacity: 0;
-    transform: scale(0.92);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.splash-logo {
-  animation: splash-logo 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes splash-bar {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-}
-
-.splash-bar {
-  animation: splash-bar 1.3s cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-@keyframes splash-fade {
-  0% {
-    opacity: 1;
-    visibility: visible;
-  }
-  68% {
-    opacity: 1;
-  }
-  95% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-
-.splash-overlay {
-  animation: splash-fade 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+/* Splash screen — tilted bars */
+.tilted-bar {
+  transform: skewX(-20deg);
+  transform-origin: center bottom;
 }
 
 /* Soft cyan bloom used on accent dots and status markers. */
@@ -830,23 +781,15 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   TOAST NOTIFICATIONS — Modern Rectangle HUD Toast
+   TOAST NOTIFICATIONS — Runtime Control Panel Strip
+   Flat, hairline, zero-radius. The countdown is a segmented telemetry meter
+   rather than a boxed body, so it reads like a gauge on a dispatch console.
    ═══════════════════════════════════════════════════════════════════════════ */
-
-@keyframes toastProgressVertical {
-  0% {
-    height: 100%;
-  }
-
-  100% {
-    height: 0%;
-  }
-}
 
 @keyframes toastSlideIn {
   from {
     opacity: 0;
-    transform: translateY(18px) scale(0.97);
+    transform: translateY(-16px) scale(0.97);
   }
 
   to {
@@ -855,18 +798,39 @@
   }
 }
 
+@keyframes toastSlideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(18px) scale(0.98);
+  }
+}
+
 .toast-slide-up {
   animation: toastSlideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.toast-progress-bar {
-  animation-name: toastProgressVertical;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
+.toast-leave {
+  animation: toastSlideOut 0.24s cubic-bezier(0.4, 0, 1, 1) both;
 }
 
-.group:hover .toast-progress-bar {
-  animation-play-state: paused;
+/* Segmented expiry strip: track and fill share the same 12px pitch (8px
+   lit, 4px gap) so the blocks line up grid-perfect as the countdown drains.
+   The fill inherits its colour from the row's accent text colour. */
+.toast-meter-track {
+  background-image: repeating-linear-gradient(90deg,
+      var(--color-line) 0 8px,
+      transparent 8px 12px);
+}
+
+.toast-meter-fill {
+  background-image: repeating-linear-gradient(90deg,
+      currentColor 0 8px,
+      transparent 8px 12px);
 }
 
 

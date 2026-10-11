@@ -278,6 +278,100 @@ export function IconExpand(p: IconProps) {
   );
 }
 
+/* ─── Status glyphs (toast channels) ───────────────────────────────────────── */
+
+/** Acknowledged / success. */
+export function IconCheck(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M4 12.5l5 5L20 6.5" />
+    </Svg>
+  );
+}
+
+/** Threshold warning — triangle with a bang. */
+export function IconWarning(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M12 3.5 1.8 21h20.4L12 3.5Z" />
+      <path d="M12 10v4.5" />
+      <path d="M12 17.7h.01" />
+    </Svg>
+  );
+}
+
+/** Critical failure — stop octagon with a cross. */
+export function IconAlert(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M8.2 2.5h7.6L21.5 8.2v7.6L15.8 21.5H8.2L2.5 15.8V8.2L8.2 2.5Z" />
+      <path d="M9.2 9.2l5.6 5.6M14.8 9.2l-5.6 5.6" />
+    </Svg>
+  );
+}
+
+/** Info / telemetry — activity pulse. */
+export function IconPulse(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M2 12h4l3-7 4 14 3-7h6" />
+    </Svg>
+  );
+}
+
+/** Neutral / sync — rotating arrows. */
+export function IconSync(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+      <path d="M3 3v5h5" />
+      <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16" />
+      <path d="M16 16h5v5" />
+    </Svg>
+  );
+}
+
+/** Actionable / rollback — undo arrow. */
+export function IconUndo(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M3 7v6h6" />
+      <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13" />
+    </Svg>
+  );
+}
+
+/** Progress / data telemetry — hourglass / threshold meter. */
+export function IconProgress(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M5 22h14M5 2h14" />
+      <path d="M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22" />
+      <path d="M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2" />
+    </Svg>
+  );
+}
+
+/** Purge / clear stack glyph. */
+export function IconMop(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M4 19h16M7 19l2-13h6l2 13M12 6V2" />
+    </Svg>
+  );
+}
+
+/** Verified / success checkmark badge. */
+export function IconVerified(p: IconProps) {
+  return (
+    <Svg {...p}>
+      <path d="M12 2l3.09 2.26 3.79-.37 1.57 3.47 3.09 2.26-1.57 3.47 1.57 3.47-3.09 2.26-1.57 3.47-3.79-.37L12 22l-3.09-2.26-3.79.37-1.57-3.47-3.09-2.26 1.57-3.47-1.57-3.47 3.09-2.26 1.57-3.47 3.79.37L12 2z" />
+      <path d="m9 12 2 2 4-4" />
+    </Svg>
+  );
+}
+
+
 /* ─── Name → component lookup ──────────────────────────────────────────────── */
 
 export const ICONS = {

@@ -30,8 +30,8 @@ const siteUrl = "https://gambhirpoudel.com.np";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
+    default: `${site.name} | ${site.role}`,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
   keywords: [
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: siteUrl,
-    siteName: `${site.name} — Portfolio`,
-    title: `${site.name} — ${site.role}`,
+    siteName: `${site.name} | Portfolio`,
+    title: `${site.name} | ${site.role}`,
     description: site.description,
     locale: "en_US",
     images: [
