@@ -10,7 +10,7 @@ import {
 } from "react";
 import GalleryLightbox, { type LightboxImage } from "./GalleryLightbox";
 
-/** `"/images/streamly/tv.png"` → `"Tv"` — the label shown in the toolbar. */
+/** `"/images/projects/streamly/tv.png"` → `"Tv"` — the label shown in the toolbar. */
 export function shotTitle(path: string, fallback: string) {
   const file = path.split("/").pop() ?? "";
   const stem = file.replace(/\.[a-z0-9]+$/i, "");

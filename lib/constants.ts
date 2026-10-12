@@ -161,7 +161,7 @@ export const hero = {
        year: 2026,                  required
        madeAt: "Personal Project",  required
        tools: ["Flutter"],          optional
-       images: ["/images/my-app/home.png"],   optional — screenshots for the gallery
+       images: ["/images/projects/my-app/home.png"],   optional — screenshots for the gallery
        media: { image, alt, metric, metricLabel },  optional — panel/card image + stat
        githubLink / externalLink / playstoreLink,   optional — buttons render
        details: ["…"],              optional — the numbered documentation
@@ -182,20 +182,20 @@ export const projects: Project[] = [
     year: 2026,
     madeAt: "Personal Project",
     media: {
-      image: "/images/sajilo-khata/sajilokhata-banner.png",
+      image: "/images/projects/sajilo-khata/sajilokhata-banner.png",
       alt: "Sajilo Khata banner",
       metric: `${bankCount} banks`,
       metricLabel: "SMS auto-logged",
     },
     images: [
-      "/images/sajilo-khata/dashboard.png",
-      "/images/sajilo-khata/ledger.png",
-      "/images/sajilo-khata/add-transaction.png",
-      "/images/sajilo-khata/goals.png",
-      "/images/sajilo-khata/add-New-Goal.png",
-      "/images/sajilo-khata/add-Savings.png",
-      "/images/sajilo-khata/profile.png",
-      "/images/sajilo-khata/sms-tracking.png",
+      "/images/projects/sajilo-khata/dashboard.png",
+      "/images/projects/sajilo-khata/ledger.png",
+      "/images/projects/sajilo-khata/add-transaction.png",
+      "/images/projects/sajilo-khata/goals.png",
+      "/images/projects/sajilo-khata/add-New-Goal.png",
+      "/images/projects/sajilo-khata/add-Savings.png",
+      "/images/projects/sajilo-khata/profile.png",
+      "/images/projects/sajilo-khata/sms-tracking.png",
     ],
     details: [
       "Sajilo Khata is a Flutter app that automatically tracks income and expenses by reading SMS messages from major Nepali banks and digital wallets, removing the need for manual transaction entry. Users can also add cash transactions manually.",
@@ -241,17 +241,17 @@ export const projects: Project[] = [
     year: 2024,
     madeAt: "Personal Project",
     media: {
-      image: "/images/streamly/homepage.png",
+      image: "/images/projects/streamly/homepage.png",
       alt: "Streamly home page",
       metric: stats.streamly.visitors,
       metricLabel: "Monthly visitors",
     },
     images: [
-      "/images/streamly/homepage.png",
-      "/images/streamly/movies.png",
-      "/images/streamly/details.png",
-      "/images/streamly/player.png",
-      "/images/streamly/tv.png",
+      "/images/projects/streamly/homepage.png",
+      "/images/projects/streamly/movies.png",
+      "/images/projects/streamly/details.png",
+      "/images/projects/streamly/player.png",
+      "/images/projects/streamly/tv.png",
     ],
     details: [
       "Streamly is an ad-free streaming platform for movies and TV series, built with Next.js and powered by the TMDB API to provide an extensive, constantly updated content library.",
@@ -272,16 +272,16 @@ export const projects: Project[] = [
     year: 2026,
     madeAt: "Personal Project",
     media: {
-      image: "/images/nepali-calendar-kit/homepage.png",
+      image: "/images/projects/nepali-calendar-kit/homepage.png",
       alt: "Nepali Calendar Kit documentation site",
       metric: `${stats.calendarKit.weeklyDownloads} / week`,
       metricLabel: "npm downloads",
     },
     images: [
-      "/images/nepali-calendar-kit/homepage.png",
-      "/images/nepali-calendar-kit/calendar.png",
-      "/images/nepali-calendar-kit/date-conversion.png",
-      "/images/nepali-calendar-kit/date-format.png",
+      "/images/projects/nepali-calendar-kit/homepage.png",
+      "/images/projects/nepali-calendar-kit/calendar.png",
+      "/images/projects/nepali-calendar-kit/date-conversion.png",
+      "/images/projects/nepali-calendar-kit/date-format.png",
     ],
     details: [
       "Nepali Calendar Kit is a lightweight, fully TypeScript-typed React library for converting between AD (Gregorian) and BS (Bikram Sambat) dates, with utilities like adToBs, bsToAd, formatBs, and formatAd supporting multiple display formats and Nepali numerals.",
@@ -302,16 +302,16 @@ export const projects: Project[] = [
     year: 2025,
     madeAt: "Personal Project",
     media: {
-      image: "/images/portfolio-v1/homepage.png",
+      image: "/images/projects/portfolio-v1/homepage.png",
       alt: "Portfolio V1 homepage",
       metric: "200+",
       metricLabel: "visitors",
     },
     images: [
-      "/images/portfolio-v1/homepage.png",
-      "/images/portfolio-v1/experience-section.png",
-      "/images/portfolio-v1/project-section.png",
-      "/images/portfolio-v1/project-details.png",
+      "/images/projects/portfolio-v1/homepage.png",
+      "/images/projects/portfolio-v1/experience-section.png",
+      "/images/projects/portfolio-v1/project-section.png",
+      "/images/projects/portfolio-v1/project-details.png",
     ],
     details: [
       "Portfolio V1 is a static portfolio website built with Next.js and Tailwind CSS to showcase my work as a mobile and frontend engineer.",
@@ -475,7 +475,7 @@ export const features = [
       "Type-aware React date picker",
       "Object-oriented NepaliDate class",
     ],
-    image: calendarKit?.images?.[1] ?? "/images/nepali-calendar-kit/calendar.png",
+    image: calendarKit?.images?.[1] ?? "/images/projects/nepali-calendar-kit/calendar.png",
     alt: "Cascading code on a dark monitor",
     layout: "split" as const,
     tone: "light" as const,
@@ -673,7 +673,7 @@ export const postReadMinutes = (post: BlogPost) => {
        date: "2026-10-09",           required — ISO, newest-first everywhere
        tags: ["flutter", "sms"],     optional — topic pills on the post page
        updated: "2026-11-02",        optional — "last updated" ISO date
-       image: "/images/…/cover.png", optional — card + hero artwork
+       image: "/images/projects/…/cover.png", optional — card + hero artwork
        alt: "…",                     optional — image description
        metric: "4 banks",            optional — headline stat
        metricLabel: "SMS auto-logged",

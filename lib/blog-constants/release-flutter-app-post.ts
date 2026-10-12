@@ -13,7 +13,7 @@ export const releaseFlutterAppPost: BlogPost = {
     category: "Guide",
     tags: ["flutter", "google-play", "android", "release", "app-bundle"],
     date: "2026-08-09",
-    image: "/images/sajilo-khata/dashboard.png",
+    image: "/images/projects/sajilo-khata/dashboard.png",
     alt: "Sajilo Khata dashboard screen",
     excerpt:
         "Signing, building the app bundle, the Play Console declarations, closed testing and production access — the full path from flutter build to a live Play Store listing.",
@@ -194,7 +194,7 @@ flutter build appbundle
         { type: "h2", text: "The SMS declaration" },
         {
             type: "p",
-            text: "Sajilo Khata reads bank SMS, so it declares READ_SMS and RECEIVE_SMS. Google restricts those permissions, which means filling in the permissions declaration form and explaining the core feature that needs SMS access. I wrote about the technical side in the SMS post.",
+            text: "Sajilo Khata reads bank SMS, so it declares READ_SMS and RECEIVE_SMS. Google restricts those permissions, which means filling in the permissions declaration form and explaining the core feature that needs SMS access. I wrote about the technical side in the [SMS post](/blog/reading-bank-sms-in-flutter).",
         },
         {
             type: "callout",
@@ -248,10 +248,10 @@ flutter build appbundle
         {
             type: "list",
             items: [
-                "Flutter: Build and release an Android app: docs.flutter.dev/deployment/android",
-                "Google Play: Target API level requirements: support.google.com/googleplay/android-developer/answer/11926878",
-                "Google Play: App testing requirements for new personal accounts: support.google.com/googleplay/android-developer/answer/14151465",
-                "Google Play: Declarations about your app content: support.google.com/googleplay/android-developer/answer/9859455",
+                "[Flutter: Build and release an Android app](https://docs.flutter.dev/deployment/android)",
+                "[Google Play: Target API level requirements](https://support.google.com/googleplay/android-developer/answer/11926878)",
+                "[Google Play: App testing requirements for new personal accounts](https://support.google.com/googleplay/android-developer/answer/14151465)",
+                "[Google Play: Declarations about your app content](https://support.google.com/googleplay/android-developer/answer/9859455)",
             ],
         },
     ],

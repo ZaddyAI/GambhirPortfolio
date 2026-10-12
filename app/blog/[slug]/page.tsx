@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Reveal from "@/components/ui/Reveal";
+import RichText from "@/components/ui/RichText";
 import {
   blogPostHref,
   blogPosts,
@@ -68,19 +69,19 @@ function BodyBlock({ block, isLead }: { block: BlogBlock; isLead: boolean }) {
               : "text-[1rem] leading-[28px] text-soft lg:text-[1.0625rem] lg:leading-[30px]"
           }
         >
-          {block.text}
+          <RichText text={block.text} />
         </p>
       );
     case "h2":
       return (
         <h2 className="mt-4 border-t border-line pt-5 text-[1.5rem] font-extrabold uppercase leading-[1.2] tracking-[0.02em] text-stark lg:text-[2rem] lg:leading-[1.15]">
-          {block.text}
+          <RichText text={block.text} />
         </h2>
       );
     case "h3":
       return (
         <h3 className="mt-2 text-[1.125rem] font-extrabold uppercase leading-[1.3] tracking-[0.03em] text-ice lg:text-[1.375rem]">
-          {block.text}
+          <RichText text={block.text} />
         </h3>
       );
     case "code":
@@ -115,7 +116,7 @@ function BodyBlock({ block, isLead }: { block: BlogBlock; isLead: boolean }) {
               key={itemIndex}
               className="pl-1 text-[1rem] leading-[28px] text-soft lg:text-[1.0625rem] lg:leading-[30px]"
             >
-              {item}
+              <RichText text={item} />
             </li>
           ))}
         </ol>
@@ -126,7 +127,7 @@ function BodyBlock({ block, isLead }: { block: BlogBlock; isLead: boolean }) {
               key={itemIndex}
               className="pl-1 text-[1rem] leading-[28px] text-soft lg:text-[1.0625rem] lg:leading-[30px]"
             >
-              {item}
+              <RichText text={item} />
             </li>
           ))}
         </ul>
@@ -149,7 +150,7 @@ function BodyBlock({ block, isLead }: { block: BlogBlock; isLead: boolean }) {
             {warning ? "Warning" : "Note"}
           </p>
           <p className="mt-2 text-[0.9375rem] leading-[26px] text-soft lg:text-[1rem] lg:leading-[28px]">
-            {block.text}
+            <RichText text={block.text} />
           </p>
         </aside>
       );

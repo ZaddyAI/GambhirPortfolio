@@ -23,7 +23,7 @@ type Props = {
   categoryTargetId?: string;
 };
 
-/** `"/images/streamly/tv.png"` → `"Tv"` — the label shown in the toolbar. */
+/** `"/images/projects/streamly/tv.png"` → `"Tv"` — the label shown in the toolbar. */
 function titleFromPath(path: string, fallback: string) {
   const file = path.split("/").pop() ?? "";
   const stem = file.replace(/\.[a-z0-9]+$/i, "");

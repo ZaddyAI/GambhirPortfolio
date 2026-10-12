@@ -14,6 +14,7 @@ export const googlePlayAccountPost: BlogPost = {
     category: "Guide",
     tags: ["google-play", "play-console", "android", "flutter", "nepal"],
     date: "2026-06-11",
+    image: "/images/blog/google_dev_image.png",
     excerpt:
         "Personal or organization, why my Nabil Bank dollar card was rejected before the $25 payment finally worked, identity verification and the 12-tester rule.",
     body: [
@@ -119,7 +120,7 @@ export const googlePlayAccountPost: BlogPost = {
         { type: "h2", text: "The catch for new personal accounts" },
         {
             type: "p",
-            text: "Even after verification, a new personal account cannot publish publicly yet. You must first run a closed test with at least 12 opted-in testers for 14 continuous days, then apply for production access. If any tester drops out and you fall below 12, the countdown can be affected, so recruit more than the minimum. Budget about three weeks for a first launch, and start recruiting testers before your app is finished. The next post covers the full release process.",
+            text: "Even after verification, a new personal account cannot publish publicly yet. You must first run a closed test with at least 12 opted-in testers for 14 continuous days, then apply for production access. If any tester drops out and you fall below 12, the countdown can be affected, so recruit more than the minimum. Budget about three weeks for a first launch, and start recruiting testers before your app is finished. The [next post](/blog/release-flutter-app-google-play) covers the full release process.",
         },
 
         { type: "h2", text: "Mistakes worth avoiding" },
@@ -145,9 +146,9 @@ export const googlePlayAccountPost: BlogPost = {
         {
             type: "list",
             items: [
-                "Create and set up your Play Console developer account: support.google.com/googleplay/android-developer/answer/6112435",
-                "Verify your identity: support.google.com/googleplay/android-developer/answer/9198012",
-                "App testing requirements for new personal accounts: support.google.com/googleplay/android-developer/answer/14151465",
+                "[Create and set up your Play Console developer account](https://support.google.com/googleplay/android-developer/answer/6112435)",
+                "[Verify your identity](https://support.google.com/googleplay/android-developer/answer/9198012)",
+                "[App testing requirements for new personal accounts](https://support.google.com/googleplay/android-developer/answer/14151465)",
             ],
         },
     ],
