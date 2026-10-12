@@ -1,5 +1,5 @@
+import { googlePlayAccountPost, releaseFlutterAppPost, smsParsingPost } from "./blog-constants";
 import type { BlogBlock, BlogPost, NavItem, Project } from "./types";
-import { smsParsingPost } from "./blog-constants/sms-parsing-post";
 
 /** Content shapes are re-exported so every component imports the type and the
  *  data from the same module — one source of truth. */
@@ -683,7 +683,7 @@ export const postReadMinutes = (post: BlogPost) => {
      }                                                                          */
 
 /** Every post, written once. Newest first on every list. */
-const posts: BlogPost[] = [smsParsingPost];
+const posts: BlogPost[] = [googlePlayAccountPost, releaseFlutterAppPost, smsParsingPost];
 
 export const blogPosts: BlogPost[] = [...posts].sort((a, b) =>
   b.date.localeCompare(a.date),
