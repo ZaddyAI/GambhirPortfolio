@@ -13,14 +13,11 @@ import type { ReactNode } from "react";
  *
  * Code blocks are never passed through here — they stay verbatim.
  */
-const INLINE_LINK = new RegExp(
-  [
-    /* markdown */ String.raw`\[([^\]]+)\]\(([^)\s]+)\)`,
-    /* raw url   */ String.raw`|(https?:\/\/[^\s)]+|www\.[^\s)]+)`,
-    /* bare host */ String.raw`|\b((?:[a-z0-9-]+\.)+(?:com|org|net|io|dev|app|co|np|gov|edu|info|ai|me|sh|md|xyz|page|site|tech|cloud|tools|store|online|blog)(?:\/[^\s)]*)?)`,
-  ].join(""),
-  "gi",
-);
+const INLINE_LINK_SOURCE = [
+  /* markdown */ String.raw`\[([^\]]+)\]\(([^)\s]+)\)`,
+  /* raw url   */ String.raw`|(https?:\/\/[^\s)]+|www\.[^\s)]+)`,
+  /* bare host */ String.raw`|\b((?:[a-z0-9-]+\.)+(?:com|org|net|io|dev|app|co|np|gov|edu|info|ai|me|sh|md|xyz|page|site|tech|cloud|tools|store|online|blog)(?:\/[^\s)]*)?)`,
+].join("");
 
 /** Trailing sentence punctuation that belongs to the sentence, not the URL. */
 const TRAILING_PUNCTUATION = /[.,;:!?'"]+$/;
@@ -64,21 +61,25 @@ export default function RichText({ text }: { text: string }): ReactNode {
   let cursor = 0;
   let key = 0;
 
-  INLINE_LINK.lastIndex = 0;
+  /* A fresh pattern per call: `exec` advances `lastIndex`, and a shared
+   * regex would leak that cursor between renders. */
+  const pattern = new RegExp(INLINE_LINK_SOURCE, "gi");
   let match: RegExpExecArray | null;
 
-  while ((match = INLINE_LINK.exec(text)) !== null) {
+  while ((match = pattern.exec(text)) !== null) {
     const [, mdLabel, mdHref, rawUrl, bareHost] = match;
 
     /* For auto-detected links, drop trailing punctuation back into the text. */
-    let href = mdHref ?? rawUrl ?? bareHost ?? "";
+    const href = mdHref ?? rawUrl ?? bareHost ?? "";
     let label = mdLabel ?? href;
+    let target = href;
     let consumed = match[0].length;
 
     if (!mdLabel) {
       const trailing = TRAILING_PUNCTUATION.exec(label)?.[0] ?? "";
       if (trailing) {
         label = label.slice(0, -trailing.length);
+        target = target.slice(0, -trailing.length);
         consumed -= trailing.length;
       }
       if (!label) continue;
@@ -86,7 +87,7 @@ export default function RichText({ text }: { text: string }): ReactNode {
 
     const before = text.slice(cursor, match.index);
     if (before) nodes.push(before);
-    nodes.push(<Anchor key={`link-${key}`} href={href} label={label} />);
+    nodes.push(<Anchor key={`link-${key}`} href={target} label={label} />);
     key += 1;
     cursor = match.index + consumed;
   }
