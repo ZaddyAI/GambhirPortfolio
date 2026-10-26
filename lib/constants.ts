@@ -236,7 +236,7 @@ export const projects: Project[] = [
     category: "Web App",
     featured: true,
     githubLink: "https://github.com/ZaddyAI/Streamly",
-    externalLink: "https://movies.gambhirpoudel.com.np/",
+    externalLink: "https://streamly.xo.je/",
     tools: ["Next.js", "TMDB", "Tailwind"],
     year: 2024,
     madeAt: "Personal Project",
